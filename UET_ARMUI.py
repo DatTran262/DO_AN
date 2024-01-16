@@ -91,7 +91,7 @@ class Ui(QtWidgets.QMainWindow):
             if (self.ur_change.isChecked()): self.canvas.change_robot(robot_class.RobotUR5())
 
     def tabViewInitial(self):
-            self.canvas = arm_matplot.DrawWidget()
+            self.canvas = robot_matplot.DrawWidget()
 
             self.canvas.plot_done.connect(self.matlab_plot_done)
             self.canvas.plot_once.connect(self.update_endpointView)
