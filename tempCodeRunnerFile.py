@@ -1,2 +1,2 @@
 
-        # data =  f.read()
+        # self.ListActionView.itemSelectionChanged.connect(self._countAction)

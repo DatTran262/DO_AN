@@ -3,7 +3,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QApplication, QMainWindow, QTableWidget, QListView
 from PyQt5 import QtWidgets, QtCore, QtGui
 import Action
-from AddAction import AddActionForm  # Thêm dòng này để import lớp AddActionDialog
+import random, string
+import numpy as np
+import sys
+from math import radians
+
+import robot_class
+import robot_matplot
 
 class AddActionForm(QtWidgets.QWidget):
     def __init__(self):
@@ -28,10 +34,29 @@ class Ui(QtWidgets.QMainWindow):
 
         # Thay đổi thành kết nối với sự kiện của nút trong UET_ARMUI.ui
         self.AddActionButton.clicked.connect(self.add_action_clicked)
-
+        
+        # define initial flag and value
         self.listActionName = set()
         self.listAction = dict()
 
+        # self.ListActionView.itemDoubleClicked.connect(self._editJointPopup)
+        # self.ListActionView.itemSelectionChanged.connect(self._countAction)
+
+        #define view tab
+        self.tabViewInitial()
+
+        self.currentAction = 'Init'
+
+        self.editName = None
+
+        #define table view
+        # self.endpoint.setColumnCount(3)
+        self.endpoint.setHorizontalHeaderLabels(["X", "Y", "Z"])
+
+        # define robot
+        self.ur_change.toggled.connect(self.change_robot)
+        
+        self.change_robot()
         self.show()
 
     def add_action_clicked(self):
@@ -59,6 +84,19 @@ class Ui(QtWidgets.QMainWindow):
             self.ListActionView.addItem(item.text())
         # Đóng hộp thoại sau khi nhấn Save
         # self.tempPopup.close()
+
+    def change_robot(self):
+        #reset all first
+            self.reset_all()
+            if (self.ur_change.isChecked()): self.canvas.change_robot(robot_class.RobotUR5())
+
+    def tabViewInitial(self):
+            self.canvas = arm_matplot.DrawWidget()
+
+            self.canvas.plot_done.connect(self.matlab_plot_done)
+            self.canvas.plot_once.connect(self.update_endpointView)
+
+            self.MatplotLayout.addWidget(self.canvas)
 
 if __name__ == "__main__":
     # Tạo các đối tượng cho màn hình chính
