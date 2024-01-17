@@ -98,6 +98,32 @@ class Ui(QtWidgets.QMainWindow):
 
             self.MatplotLayout.addWidget(self.canvas)
 
+    def matlab_plot_done(self):
+        if (self.ExecuteActionButton.text() == "Pause"):
+            self.ExecuteActionButton.setText("Execute")
+
+    def update_endpointView(self):
+        self.endpoint.insertRow(self.endpoint.rowCount())
+        self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointX[-1] )))
+        self.endpoint.setItem(self.endpoint.rowCount()-1, 1, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointY[-1] )))
+        self.endpoint.setItem(self.endpoint.rowCount()-1, 2, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointZ[-1] )))
+
+        self.endpoint.scrollToBottom()
+
+    def reset_all(self):
+        self.endpoint.clearContents()
+        self.endpoint.setRowCount(0)
+
+        if (self.ExecuteActionButton.text() == "Pause"):
+            self.canvas.plot_pause()
+            self.ExecuteActionButton.setText("Execute")
+
+        self.listActionName = set()
+        self.listAction = dict()
+
+        self.currentAction = 'Init'
+        self.editName = None
+
 if __name__ == "__main__":
     # Tạo các đối tượng cho màn hình chính
     app = QtWidgets.QApplication(sys.argv)

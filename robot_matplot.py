@@ -59,8 +59,7 @@ class DrawWidget(QtWidgets.QWidget):
 
         self.t_counter = 0
 
-        # self.robot = robot_class._Robot()
-        self.robot = robot_class.Robot5DOF()
+        self.robot = robot_class.RobotUR5()
 
         self.List_Pose = dict()
         self.List_Pose['Home'] = self.robot.QHome
