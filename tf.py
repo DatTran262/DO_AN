@@ -22,18 +22,18 @@ class HomogeneousMatrix(object):
     def roll(self, angle_X):
         # Rotates the homogeneous matrix by angle_X by the X axis
 
-        print(angle_X)
+        # print(angle_X)
         rolled_by = np.identity(4)
         rolled_by[1, 1] = cos((angle_X))
         rolled_by[1, 2] = -(sin((angle_X)))
         rolled_by[2, 1] = sin((angle_X))
         rolled_by[2, 2] = cos((angle_X))
 
-        print("before")
-        print(self.matrix)
+        # print("before")
+        # print(self.matrix)
         self.matrix = np.dot(self.matrix, rolled_by)
-        print("after")
-        print(self.matrix)
+        # print("after")
+        # print(self.matrix)
 
     def pitch(self, angle_Y):
         # Rotates the homogeneous matrix by angle_Y by the Y axis

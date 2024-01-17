@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1089</width>
+    <width>1090</width>
     <height>530</height>
    </rect>
   </property>
@@ -102,7 +102,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>404</width>
+            <width>405</width>
             <height>480</height>
            </rect>
           </property>
@@ -277,13 +277,6 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="cus_change">
-            <property name="text">
-             <string>Custom</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="push_edit_but">
             <property name="maximumSize">
              <size>
@@ -368,7 +361,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1089</width>
+     <width>1090</width>
      <height>26</height>
     </rect>
    </property>
