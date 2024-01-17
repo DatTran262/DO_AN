@@ -165,25 +165,36 @@ class _Robot():
 class RobotUR5(_Robot):
     def __init__(self):
         super(RobotUR5, self).__init__()
-        self.numJoint = 5
+        self.numJoint = 12
         self.linkColour = self._linkColour[:self.numJoint]
-        self.jointType = ['l', 'l', 'r', 'r', 'r']
+        self.jointType = ['l', 'l', 'r', 'r', 'r','r']
+        # self.jointArmTypeR = ['l', 'r', 'r']
+        # self.jointArmTypeL = ['l', 'r', 'r']
 
-        self.L = [0.5, 0.35, 0.15, 0.2, 0]
+        self.L = [0.5, 0.35, 0.15, 0.3, 0.1, 0.15, 0.2]
 
         self.Q = [0.5, 0.75, np.pi/2, np.pi/2, np.pi/2, np.pi/2]
 
-        self.limit = [ (-1, 1), (-1, 1), (np.pi/6, np.pi*5/6), (-np.pi/2, np.pi/2), (np.pi/6, np.pi*5/6) ]
+        self.limit = [ (-1, 1), (-1, 1), (np.pi/6, np.pi*5/6), (-np.pi/2, np.pi/2), (np.pi/6, np.pi*5/6), (np.pi/6, np.pi*5/6) ]
 
-        self.jointSpeeds = [ 0.25, 0.25, np.pi/12, np.pi/12, np.pi/12 ]
+        self.jointSpeeds = [ 0.25, 0.25, np.pi/12, np.pi/12, np.pi/12, np.pi/12 ]
         self.poseJointSpeeds = self.jointSpeeds
         # self.gen_jointSpeeds()
 
         self.QHome = Pose('Home', self.Q.copy(), self.poseJointSpeeds.copy())
 
-        self.waypointX = [ 0, 0, 0, 0, 0]
-        self.waypointY = [ 0, 0, 0, 0, 0]
-        self.waypointZ = [ 0, 0, 0, 0, 0]
+        #Define waypoint body
+        self.waypointX = [ 0, 0, 0, 0, 0, 0]
+        self.waypointY = [ 0, 0, 0, 0, 0, 0]
+        self.waypointZ = [ 0, 0, 0, 0, 0, 0]
+        # #Define waaypoint arm right
+        # self.waypointRX = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointRY = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointRZ = [ 0, 0, 0, 0, 0, 0]
+        # #Define waaypoint arm left
+        # self.waypointLX = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointLY = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointLZ = [ 0, 0, 0, 0, 0, 0]
 
         self.jointSpace = []
         self.pointStep = 5
@@ -197,6 +208,7 @@ class RobotUR5(_Robot):
         self.joint2 = HomogeneousMatrix()
         self.joint3 = HomogeneousMatrix()
         self.joint4 = HomogeneousMatrix()
+        self.joint5 = HomogeneousMatrix()
 
     def forward_kinematic(self):
         self.base.complete  (0        , 0        , self.Q[0], 0        )
@@ -205,15 +217,46 @@ class RobotUR5(_Robot):
         self.joint3.complete(self.L[1], self.Q[4], 0        , self.Q[4])
         self.joint4.complete(self.L[2], 0        , 0        , 0        )
 
+        # Join transfer
+        self.joint5.complete(self.L[3], self.Q[5], 0        , self.Q[5])
+
+        # #Join arm right
+        # self.joint6.complete()
+        # self.joint7.complete()
+        # self.joint8.complete()
+
+        # #Join arm right
+        # self.joint9.complete()
+        # self.joint10.complete()
+        # self.joint11.complete()
+
         # ---------------------------------
         self.joint1.set_parent(self.base.get())
         self.joint2.set_parent(self.joint1.get())
         self.joint3.set_parent(self.joint2.get())
         self.joint4.set_parent(self.joint3.get())
+        self.joint5.set_parent(self.joint2.get())
 
-        self.waypointX = [self.base[0, 3], self.joint1[0, 3], self.joint2[0, 3], self.joint3[0, 3], self.joint4[0, 3]]#, self.joint5[0, 3], self.joint6[0, 3]]
-        self.waypointY = [self.base[1, 3], self.joint1[1, 3], self.joint2[1, 3], self.joint3[1, 3], self.joint4[1, 3]]#, self.joint5[1, 3], self.joint6[1, 3]]
-        self.waypointZ = [self.base[2, 3], self.joint1[2, 3], self.joint2[2, 3], self.joint3[2, 3], self.joint4[2, 3]]#, self.joint5[2, 3], self.joint6[2, 3]]
+        # self.joint6.set_parent(self.joint5.get())
+        # self.joint7.set_parent(self.joint6.get())
+        # self.joint8.set_parent(self.joint7.get())
+
+        # self.joint9.set_parent(self.joint5.get())
+        # self.joint10.set_parent(self.joint9.get())
+        # self.joint11.set_parent(self.joint10.get())
+
+        #Set waypoint body
+        self.waypointX = [self.base[0, 3], self.joint1[0, 3], self.joint2[0, 3], self.joint3[0, 3], self.joint4[0, 3], self.joint5[0, 3]]
+        self.waypointY = [self.base[1, 3], self.joint1[1, 3], self.joint2[1, 3], self.joint3[1, 3], self.joint4[1, 3], self.joint5[1, 3]]
+        self.waypointZ = [self.base[2, 3], self.joint1[2, 3], self.joint2[2, 3], self.joint3[2, 3], self.joint4[2, 3], self.joint5[2, 3]]
+        # #Set waypoint arm right
+        # self.waypointRX = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointRY = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointRZ = [ 0, 0, 0, 0, 0, 0]
+        # #Set waypoint arm left
+        # self.waypointLX = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointLY = [ 0, 0, 0, 0, 0, 0]
+        # self.waypointLZ = [ 0, 0, 0, 0, 0, 0]
 
     def get_waypoint(self):
         if not (self.check_limit()): return False
