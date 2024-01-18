@@ -142,6 +142,12 @@ class DrawWidget(QtWidgets.QWidget):
         for i in range(len(self.robot.waypointX) - 1):
             self.axes.plot([self.robot.waypointX[i], self.robot.waypointX[i+1] ] , [self.robot.waypointY[i], self.robot.waypointY[i+1] ],\
                 '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointZ[i], self.robot.waypointZ[i+1] ], label=str('Link ' + str(i))) 
+        for i in range(len(self.robot.waypointRX) - 1):
+            self.axes.plot([self.robot.waypointRX[i], self.robot.waypointRX[i+1] ] , [self.robot.waypointRY[i], self.robot.waypointRY[i+1] ],\
+                '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointRZ[i], self.robot.waypointRZ[i+1] ], label=str('Link ' + str(i))) 
+        for i in range(len(self.robot.waypointLX) - 1):
+            self.axes.plot([self.robot.waypointLX[i], self.robot.waypointLX[i+1] ] , [self.robot.waypointLY[i], self.robot.waypointLY[i+1] ],\
+                '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointLZ[i], self.robot.waypointLZ[i+1] ], label=str('Link ' + str(i))) 
         self.current_point.append(self.axes.scatter(self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1], marker = 'x', color='purple') )
         self.history_point.append((self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1]) )
 
