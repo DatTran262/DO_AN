@@ -6,10 +6,6 @@ class HomogeneousMatrix(object):
     # Creates a homogeneous matrix.
 
     def __init__(self):
-        # [0,0] - [2,2] rotation
-        # [0,3] - [2,3] position
-        # [3,0] - [3,2] perspective parameters
-        # [3,3] scale factor
 
         self.matrix = np.identity(4)
 
