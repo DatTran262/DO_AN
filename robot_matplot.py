@@ -113,7 +113,7 @@ class DrawWidget(QtWidgets.QWidget):
     def all_plot(self):
         if (self.t_counter >= len(self.jointTrajectory)):
             self.drawCurve()
-            self.plot_pause()
+            self.robot_limit_plot()
             # output some signal to host to revert back button
             self.plot_done.emit()
             return

@@ -105,6 +105,7 @@ class Ui(QtWidgets.QMainWindow):
         if (self.ExecuteActionButton.text() == "Pause"):
             self.ExecuteActionButton.setText("Execute")
 
+    #
     def update_endpointView(self):
         self.endpoint.insertRow(self.endpoint.rowCount())
         self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointX[-1] )))
@@ -177,7 +178,6 @@ class Ui(QtWidgets.QMainWindow):
             self.endpoint.setRowCount(0)
 
             self.execute()
-            # self.CurrentTotalTimeValue.setText(str( len(self.canvas.jointTrajectory) ))
             self.canvas.robot_limit_plot()
             self.ExecuteActionButton.setText("Pause")
         elif (self.ExecuteActionButton.text() == "Pause"):
