@@ -173,13 +173,13 @@ class RobotUR5(_Robot):
 
         self.L = [0.28, 0.17, 0.05, 0.17, -0.05, 0.05, 0.12, 0.08]
 
-        self.Q = [0.5, 0.75, np.pi/2, np.pi/2, np.pi/2, np.pi/2, 0.05, np.pi/2, np.pi/2, -0.05, np.pi/2, np.pi/2]
+        self.Q = [0.5, 0.75, np.pi/2, np.pi/2, np.pi/2, np.pi/2, 0.05, -np.pi/2, -np.pi/2, -0.05, -np.pi/2, -np.pi/2]
 
         self.limit = [ (0, 1), (0, 1), (0, np.pi/2), (0, np.pi/2), (0, np.pi*5/6), (0, np.pi/2), 
                        (-1, 1), (-np.pi/2, 0), (-np.pi*5/6, np.pi*5/6), 
                        (-1, 1), (-np.pi/2, 0), (-np.pi*5/6, np.pi*5/6) ]
 
-        self.jointSpeeds = [ 0.25, 0.25, np.pi/12, np.pi/12, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12 ]
+        self.jointSpeeds = [ 0.05, 0.05, np.pi/12, np.pi/12, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12 ]
         self.poseJointSpeeds = self.jointSpeeds
         # self.gen_jointSpeeds()
 
@@ -232,13 +232,13 @@ class RobotUR5(_Robot):
 
         #Join arm right
         self.joint6.complete(0        , 0        , self.L[4], 0        )
-        self.joint7.complete(self.L[6], self.Q[7], 0        , 0        )
-        self.joint8.complete(self.L[7], self.Q[8], 0        , 0        )
+        self.joint7.complete(self.L[6], 0        , 0        , self.Q[7])
+        self.joint8.complete(self.L[7], 0        , 0        , self.Q[8])
 
         #Join arm right
-        self.joint9.complete (0        , 0         , self.L[5], 0        )
-        self.joint10.complete(self.L[6], self.Q[10], 0        , 0        )
-        self.joint11.complete(self.L[7], self.Q[11], 0        , 0        )
+        self.joint9.complete (0        , 0         , self.L[5], 0         )
+        self.joint10.complete(self.L[6], 0         , 0        , self.Q[10])
+        self.joint11.complete(self.L[7], 0         , 0        , self.Q[11])
 
         # ---------------------------------
         self.joint1.set_parent(self.base.get())
