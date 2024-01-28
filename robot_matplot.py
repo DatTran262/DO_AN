@@ -31,27 +31,12 @@ class DrawWidget(QtWidgets.QWidget):
         layout = QtWidgets.QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-        # small_layout = QtWidgets.QHBoxLayout(self)
-        # Just some button connected to `plot` method
-        # self.button = QtWidgets.QPushButton('Plot')
-        # self.button.clicked.connect(self.robot_limit_plot)
-    
-        # self.pause_button = QtWidgets.QPushButton('Pause')
-        # self.pause_button.clicked.connect(self.plot_pause)
-
-        # self.set_pose_button = QtWidgets.QPushButton('Set')
-        # self.set_pose_button.clicked.connect(self.set_pose)
 
         self.timer = QtCore.QTimer()
         self.timer.setInterval(2)
 
-        # small_layout.addWidget(self.button)
-        # small_layout.addWidget(self.pause_button)
-        # small_layout.addWidget(self.set_pose_button)
-
         layout.addWidget(self.canvas)
         layout.addWidget(self.toolbar)
-        # layout.addLayout(small_layout)
 
         self.setLayout(layout)
 
@@ -126,7 +111,10 @@ class DrawWidget(QtWidgets.QWidget):
 
     def drawCurve(self):
         temp_array = np.array(self.history_point).T
-        self.axes.plot(temp_array[0], temp_array[1], temp_array[2], color = 'k')
+        self.axes.plot(temp_array[0], temp_array[1], temp_array[2], 
+                       temp_array[3], temp_array[4], temp_array[5], 
+                       temp_array[6], temp_array[7], temp_array[8],
+                       color = 'k')
         self.canvas.draw()
 
     def refix(self, trim_len = 10):
@@ -138,22 +126,26 @@ class DrawWidget(QtWidgets.QWidget):
  
         for line in self.axes.get_lines(): # ax.lines:
             line.remove()
+
         self.robot.get_waypoint()
         for i in range(len(self.robot.waypointX) - 1):
             self.axes.plot([self.robot.waypointX[i], self.robot.waypointX[i+1] ] , [self.robot.waypointY[i], self.robot.waypointY[i+1] ],\
                 '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointZ[i], self.robot.waypointZ[i+1] ], label=str('Link ' + str(i))) 
         for i in range(len(self.robot.waypointRX) - 1):
             self.axes.plot([self.robot.waypointRX[i], self.robot.waypointRX[i+1] ] , [self.robot.waypointRY[i], self.robot.waypointRY[i+1] ],\
-                '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointRZ[i], self.robot.waypointRZ[i+1] ], label=str('Link ' + str(i))) 
+                '*--', color = self.robot.linkColour[1], zs= [self.robot.waypointRZ[i], self.robot.waypointRZ[i+1] ], label=str('Link ' + str(i)))
         for i in range(len(self.robot.waypointLX) - 1):
             self.axes.plot([self.robot.waypointLX[i], self.robot.waypointLX[i+1] ] , [self.robot.waypointLY[i], self.robot.waypointLY[i+1] ],\
-                '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointLZ[i], self.robot.waypointLZ[i+1] ], label=str('Link ' + str(i))) 
-        self.current_point.append(self.axes.scatter(self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1], marker = 'x', color='purple') )
-        self.history_point.append((self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1]) )
+                '*--', color = self.robot.linkColour[1], zs= [self.robot.waypointLZ[i], self.robot.waypointLZ[i+1] ], label=str('Link ' + str(i))) 
+                
+        # self.current_point.append(self.axes.scatter(self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1], marker = 'O', color='purple') )
+        self.history_point.append((self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1],
+                                   self.robot.waypointRX[-1], self.robot.waypointRY[-1], self.robot.waypointRZ[-1],
+                                   self.robot.waypointLX[-1], self.robot.waypointLY[-1], self.robot.waypointLZ[-1]))
 
         self.plot_once.emit()
 
-        self.refix()
+        # self.refix()
 
         self.canvas.draw()
 
