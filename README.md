@@ -4,10 +4,8 @@ Mở file UET_ARMUI.py để chạy chường trình
 *Báo cáo ngày 31/1/2024
 
 Làm được:
-- Chưa làm được gì
+- Sửa hoàn thành mục DH cho 2 tay.
+- Làm hành động vẫy tay.
 
-Vướng mắc:
-- Vẫn đang loay hoay với bảng DH của các khớp tay
-
-Dự định: 
-- Tiếp tục các phần của lần trước đã đặt ra
+Dự định:
+- Làm hành động di chuyển cho robot đi từ 0 đến 1 vị trí mới (có animation).
