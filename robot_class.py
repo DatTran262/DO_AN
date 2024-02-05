@@ -171,7 +171,7 @@ class RobotUR5(_Robot):
         self.jointArmTypeR = ['l', 'r', 'r']
         self.jointArmTypeL = ['l', 'r', 'r']
 
-        self.L = [0.28, 0.17, 0.05, 0.17, -0.05, 0.05, 0.12, 0.08]
+        self.L = [0.28, 0.17, 0.05, 0.17, -0.05, 0.05, 0.12, 0.08] #khớp chân có bắp chân dài 0.15, cẳng chân dài 0.13
 
         self.Q = [0, 0, np.pi/2, np.pi/2, np.pi/2, np.pi/2, 0, np.pi/2, np.pi/2, 0, np.pi/2, np.pi/2]
 
@@ -237,8 +237,8 @@ class RobotUR5(_Robot):
 
         #Join arm left
         self.joint9.complete (0        , self.Q[9] , self.L[5], np.pi/2)
-        self.joint10.complete(0        , self.Q[10], self.L[6], 0)
-        self.joint11.complete(0        , self.Q[11], self.L[7], 0)
+        self.joint10.complete(0        , self.Q[10], self.L[6], 0      )
+        self.joint11.complete(0        , self.Q[11], self.L[7], 0      )
 
         # ---------------------------------
         self.joint1.set_parent(self.base.get())
