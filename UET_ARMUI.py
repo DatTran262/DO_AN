@@ -57,7 +57,8 @@ class Ui(QtWidgets.QMainWindow):
         self.endpoint.setHorizontalHeaderLabels(["X", "Y", "Z"])
 
         # define robot
-        self.ur_change.toggled.connect(self.change_robot)
+        # self.ur_change.toggled.connect(self.change_robot)
+        self.change_robot()
         
         self.change_robot()
         self.show()
@@ -71,6 +72,7 @@ class Ui(QtWidgets.QMainWindow):
         # Xử lý khi nút "Save" được nhấn
         tempNameSay = self.tempPopup.txtNameSay.toPlainText()
         tempNameMove = self.tempPopup.txtNameMove.toPlainText()
+# need better handle here, but maybe for now is okay
         if tempNameSay:
             self.ListActionView.addItem(self.tempPopup.txtNameSay.toPlainText() + ": " + self.tempPopup.txtSay.toPlainText())
             self.tempPopup.txtNameSay.clear()
@@ -91,7 +93,8 @@ class Ui(QtWidgets.QMainWindow):
     def change_robot(self):
         #reset all first
             self.reset_all()
-            if (self.ur_change.isChecked()): self.canvas.change_robot(robot_class.RobotUR5())
+            self.canvas.change_robot(robot_class.RobotUR5())
+            # if (self.ur_change.isChecked()): self.canvas.change_robot(robot_class.RobotUR5())
 
     def tabViewInitial(self):
             self.canvas = robot_matplot.DrawWidget()

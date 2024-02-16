@@ -35,7 +35,7 @@
     <enum>QTabWidget::Triangular</enum>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <property name="iconSize">
     <size>
@@ -49,7 +49,7 @@
    <property name="tabBarAutoHide">
     <bool>false</bool>
    </property>
-   <widget class="QWidget" name="Say" native="true">
+   <widget class="QWidget" name="Say">
     <attribute name="title">
      <string>Say</string>
     </attribute>
@@ -109,7 +109,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="Move" native="true">
+   <widget class="QWidget" name="Move">
     <attribute name="title">
      <string notr="true">Move</string>
     </attribute>
@@ -149,7 +149,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>X:</string>
+      <string>X</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -165,7 +165,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Y:</string>
+      <string>Y</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -181,7 +181,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Z:</string>
+      <string>Speed</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -218,7 +218,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="ActionBasic" native="true">
+   <widget class="QWidget" name="ActionBasic">
     <attribute name="title">
      <string>Action Basic</string>
     </attribute>
