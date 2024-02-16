@@ -1,77 +1,71 @@
-# def read_file(file_path, encoding='utf-8'):
+# def find_text_in_file(file_path, target_text):
 #     try:
-#         with open(file_path, 'r', encoding=encoding) as file:
-#             lines = file.readlines()
-#             return lines
+#         with open(file_path, 'r') as file:
+#             for line in file:
+#                 if target_text in line:
+#                     return line.strip()  # Trả về dòng chứa target_text (loại bỏ ký tự xuống dòng)
 #     except FileNotFoundError:
-#         print(f"File '{file_path}' not found.")
-#         return None
-#     except Exception as e:
-#         print(f"An error occurred: {e}")
-#         return None
+#         print(f"File '{file_path}' không tồn tại.")
 
-# def main():
-#     file_path = 'Action.txt'  # Thay thế bằng đường dẫn tới file của bạn
+# # Khởi tạo listactionName là một set rỗng
+# listactionName = set()
 
-#     lines = read_file(file_path)
+# # Khởi tạo listAction là một dict rỗng
+# listAction = {}
 
-#     if lines is not None:
-#         print("Array content:")
-#         array_content = [line.strip() for line in lines]
-#         print(array_content)
+# # Đường dẫn đến file text
+# file_path = "Action.txt"
 
-# if __name__ == "__main__":
-#     main()
+# # Mở file text để đọc
+# with open(file_path, 'r') as file:
+#     # Đọc dòng đầu tiên từ file và thêm vào set listactionName
+#     action_name = file.readline().strip()
+#     listactionName.add(action_name)
+    
+#     # Đọc dòng thứ hai từ file và tách thành các phần tử
+#     action_data = file.readline().strip().split()
+    
+#     # Lưu thông tin từ dòng thứ hai vào listAction dưới dạng key-value pairs
+#     listAction[action_name] = {
+#         "initial_angle": int(action_data[0]),
+#         "joint_type": action_data[1],
+#         "target_angle": int(action_data[2]),
+#         "angular_speed": int(action_data[3])
+#     }
 
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation
+# # In ra hai đối tượng listactionName và listAction
+# print("List of action names:", listactionName)
+# print("List of actions:", listAction)
 
-# Define DH parameters for a simple leg
-# (Modify these parameters according to your robot configuration)
-L1 = 1.0  # Length of link 1
-L2 = 1.0  # Length of link 2
-L3 = 0.5  # Length of link 3
+# # Tìm kiếm giá trị trong file văn bản
+# target_text = "HL"
+# result = find_text_in_file(file_path, target_text)
+# if result:
+#     print("Dòng chứa giá trị cần tìm là:", result)
+# else:
+#     print("Không tìm thấy giá trị cần tìm trong file.")
 
-# Function to compute forward kinematics
-def forward_kinematics(theta1, theta2, theta3):
-    x = L1 * np.sin(theta1) + L2 * np.sin(theta1 + theta2) + L3 * np.sin(theta1 + theta2 + theta3)
-    y = L1 * np.cos(theta1) + L2 * np.cos(theta1 + theta2) + L3 * np.cos(theta1 + theta2 + theta3)
-    z = -L1 * np.cos(theta2) - L2 * np.cos(theta2 + theta3) + L3 * np.cos(theta2 + theta3)
-    return x, y, z
 
-# Number of frames for animation
-frames = 100
 
-# Initialize joint angles
-theta1 = np.linspace(0, np.pi / 2, frames)
-theta2 = np.linspace(0, np.pi / 2, frames)
-theta3 = np.linspace(0, np.pi / 2, frames)
 
-# Create figure and axis
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+# Đường dẫn đến file text
+file_path = "Action.txt"
 
-# Create line object for leg
-line, = ax.plot([], [], [], 'o-', lw=2)
+# Khởi tạo một dict để lưu các giá trị
+values_dict = {}
 
-# Set axis limits
-ax.set_xlim(-2, 2)
-ax.set_ylim(-2, 2)
-ax.set_zlim(-2, 2)
+# Mở file text để đọc
+with open(file_path, 'r') as file:
+    # Đọc từng dòng trong file
+    for line in file:
+        # Kiểm tra nếu dòng không rỗng
+        if line.strip():
+            # Tách từ đầu tiên từ dòng
+            first_word, *other_values = line.strip().split()
+            
+            # Lưu các giá trị còn lại vào biến kiểu dict với từ đầu tiên làm key
+            values_dict[first_word] = other_values
 
-# Function to update plot during animation
-def update_plot(frame, line, theta1, theta2, theta3):
-    x, y, z = forward_kinematics(theta1[frame], theta2[frame], theta3[frame])
-    line.set_data([0, x], [0, y])
-    line.set_3d_properties([0, z])
-    return line,
-
-# Create animation
-ani = FuncAnimation(fig, update_plot, frames=frames, fargs=(line, theta1, theta2, theta3), blit=True)
-
-# Show plot
-plt.show()
-
+# In ra dict chứa các giá trị
+print("Dict chứa các giá trị:", values_dict)
 

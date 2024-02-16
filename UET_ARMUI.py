@@ -12,6 +12,10 @@ import robot_class
 import robot_matplot
 
 class AddActionForm(QtWidgets.QWidget):
+
+    entries = []
+    entries_dict = {} 
+
     def __init__(self):
         super(AddActionForm, self).__init__()
         uic.loadUi('AddAction.ui', self)
@@ -19,10 +23,17 @@ class AddActionForm(QtWidgets.QWidget):
         self.show()
 
     def loadActions(self):
-        # with open('Action.txt') as f:
-        # data =  f.read()
-        entries = ['Đứng', 'Ngồi', 'Giơ tay trái', 'Giơ tay phải', 'Giơ chân trái', 'Giơ chân phải']
-        for i in entries:
+        file_path = "Action.txt"
+
+        with open(file_path, 'r') as file:
+            for line in file:
+                if line.strip():
+                    entrie, *other_values = line.strip().split()
+                    self.entries.append(entrie)
+                    self.entries_dict[entrie] = other_values
+
+
+        for i in self.entries:
             self.listWidgetActionBasic.addItem(i)
         
 
@@ -74,11 +85,25 @@ class Ui(QtWidgets.QMainWindow):
         tempNameMove = self.tempPopup.txtNameMove.toPlainText()
 # need better handle here, but maybe for now is okay
         if tempNameSay:
-            self.ListActionView.addItem(self.tempPopup.txtNameSay.toPlainText() + ": " + self.tempPopup.txtSay.toPlainText())
+            currentName = self.tempPopup.txtNameSay.toPlainText()
+
+            self.ListActionView.addItem(currentName + ": " + self.tempPopup.txtSay.toPlainText())
+
+            # self.listActionName = append(self.tempPopup.txtNameSay.toPlainTexttext())
+            # self.listAction[currentName] = robot_class.JointAction(currentName, self.tempPopup.JointhValue.value(),\
+            #                                                 'union' if self.tempPopup.UnionRadioButton.isChecked() else 'lock' , self.tempPopup.JointhTargetValue.value(), self.tempPopup.SpeedValue.value() )
+            
             self.tempPopup.txtNameSay.clear()
             self.tempPopup.txtSay.clear()
         elif tempNameMove:
-            self.ListActionView.addItem(self.tempPopup.txtNameMove.toPlainText() + ": " + self.tempPopup.txtX.toPlainText() + ', ' + self.tempPopup.txtY.toPlainText() + ', ' + self.tempPopup.txtZ.toPlainText())
+            currentName = self.tempPopup.txtNameSay.toPlainText()
+            
+            self.ListActionView.addItem(currentName + ": " + self.tempPopup.txtX.toPlainText() + ', ' + self.tempPopup.txtY.toPlainText() + ', ' + self.tempPopup.txtZ.toPlainText())
+            
+            # self.listActionName = append(self.tempPopup.txtNameSay.toPlainTexttext())
+            # self.listAction[currentName] = robot_class.JointAction(currentName, self.tempPopup.JointhValue.value(),\
+            #                                                 'union' if self.tempPopup.UnionRadioButton.isChecked() else 'lock' , self.tempPopup.JointhTargetValue.value(), self.tempPopup.SpeedValue.value() )
+            
             self.tempPopup.txtNameMove.clear()
             self.tempPopup.txtX.clear()
             self.tempPopup.txtY.clear()
@@ -86,7 +111,14 @@ class Ui(QtWidgets.QMainWindow):
         else:
             currentIndex = self.tempPopup.listWidgetActionBasic.currentRow()
             item = self.tempPopup.listWidgetActionBasic.item(currentIndex)
+            currentName = item.text()
             self.ListActionView.addItem(item.text())
+            self.listActionName.add(currentName)
+            
+            if currentName in self.tempPopup.entries_dict:
+                self.listAction[currentName] = self.tempPopup.entries_dict[currentName].copy()
+            
+            print('listAction:', self.listAction)
         # Đóng hộp thoại sau khi nhấn Save
         # self.tempPopup.close()
 
@@ -114,14 +146,6 @@ class Ui(QtWidgets.QMainWindow):
         self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLX[0] )))
         self.endpoint.setItem(self.endpoint.rowCount()-1, 1, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLY[0] )))
         self.endpoint.setItem(self.endpoint.rowCount()-1, 2, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLZ[0] )))
-
-        # self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointRX[-1] )))
-        # self.endpoint.setItem(self.endpoint.rowCount()-1, 1, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointRY[-1] )))
-        # self.endpoint.setItem(self.endpoint.rowCount()-1, 2, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointRZ[-1] )))
-
-        # self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLX[-1] )))
-        # self.endpoint.setItem(self.endpoint.rowCount()-1, 1, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLY[-1] )))
-        # self.endpoint.setItem(self.endpoint.rowCount()-1, 2, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLZ[-1] )))
 
         self.endpoint.scrollToBottom()
 
@@ -213,9 +237,9 @@ class Ui(QtWidgets.QMainWindow):
         tempGroup = []
         for index in tempIndexes:
             if tempDict[index].type() == POSE_TYPE:
-                tempGroup.append(self.canvas.List_Pose[tempDict[index].text() ])
+                tempGroup.append(self.canvas.List_Pose[tempDict[index].text()])
             else:
-                tempGroup.append(self.listAction[ tempDict[index].text() ])
+                tempGroup.append(self.listAction[tempDict[index].text()])
 
 
         timeTable = robot_class.TimeTable(self.canvas.robot.numJoint, self.canvas.robot.QHome)

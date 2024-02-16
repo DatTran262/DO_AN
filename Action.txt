@@ -1,10 +1,4 @@
-Đứng
-Ngồi 
-Giơ tay trái
-Giơ tay phải
-Giơ chân trái
-Giơ chân phải
-Nhảy
-Vẫy tay
-Lắc đầu
-Cúi chào
+HL_wave 6 union 120 5 
+HR_wave 12 union 60 5 
+FR_up 10 union 90 5
+FL_up 8 union 50 5
