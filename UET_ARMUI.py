@@ -11,29 +11,34 @@ from math import radians
 import robot_class
 import robot_matplot
 
-class AddActionForm(QtWidgets.QWidget):
+entries = []
+entries_dict = {}
 
-    entries = []
-    entries_dict = {} 
-
-    def __init__(self):
-        super(AddActionForm, self).__init__()
-        uic.loadUi('AddAction.ui', self)
-        self.loadActions()
-        self.show()
-
-    def loadActions(self):
+def load_presetAction():
         file_path = "Action.txt"
 
         with open(file_path, 'r') as file:
             for line in file:
                 if line.strip():
                     entrie, *other_values = line.strip().split()
-                    self.entries.append(entrie)
-                    self.entries_dict[entrie] = other_values
+                    entries.append(entrie)
+                    entries_dict[entrie] = robot_class.JointAction(entrie, int(other_values[0]), other_values[1], float(other_values[2]), float(other_values[3]))
+        
+        # print(len(entries_dict))
 
+load_presetAction()
 
-        for i in self.entries:
+class AddActionForm(QtWidgets.QWidget):
+
+    def __init__(self):
+        super(AddActionForm, self).__init__()
+        uic.loadUi('AddAction.ui', self)
+
+        self.loadActions()
+        self.show()
+
+    def loadActions(self):
+        for i in entries:
             self.listWidgetActionBasic.addItem(i)
         
 
@@ -53,6 +58,10 @@ class Ui(QtWidgets.QMainWindow):
         self.listActionName = set()
         self.listAction = dict()
 
+        self.creatListAction()
+
+        # print('BE4 listAction:', self.listAction)
+    
         # self.ListActionView.itemDoubleClicked.connect(self._editJointPopup)
         # self.ListActionView.itemSelectionChanged.connect(self._countAction)
 
@@ -70,20 +79,13 @@ class Ui(QtWidgets.QMainWindow):
         # define robot
         # self.ur_change.toggled.connect(self.change_robot)
         self.change_robot()
-        
-        self.change_robot()
         self.show()
-
-    def add_action_clicked(self):
-        # Hiển thị dialog AddAction khi nút "Add" được nhấn
-        self.tempPopup = AddActionForm()
-        self.tempPopup.btnSAVE.clicked.connect(self.save_button_clicked)
 
     def save_button_clicked(self):
         # Xử lý khi nút "Save" được nhấn
         tempNameSay = self.tempPopup.txtNameSay.toPlainText()
         tempNameMove = self.tempPopup.txtNameMove.toPlainText()
-# need better handle here, but maybe for now is okay
+# need better handle here, but maybe for now is NOT okay
         if tempNameSay:
             currentName = self.tempPopup.txtNameSay.toPlainText()
 
@@ -113,14 +115,22 @@ class Ui(QtWidgets.QMainWindow):
             item = self.tempPopup.listWidgetActionBasic.item(currentIndex)
             currentName = item.text()
             self.ListActionView.addItem(item.text())
-            self.listActionName.add(currentName)
-            
-            if currentName in self.tempPopup.entries_dict:
-                self.listAction[currentName] = self.tempPopup.entries_dict[currentName].copy()
-            
-            print('listAction:', self.listAction)
-        # Đóng hộp thoại sau khi nhấn Save
         # self.tempPopup.close()
+
+    def creatListAction(self):
+        for entry in entries: 
+            entry_name = entry
+            self.listActionName.add(entry_name)  
+            self.listAction[entry_name] = entries_dict[entry]
+        print('listAction:', self.listAction)
+
+    def add_action_clicked(self):
+
+        # Hiển thị dialog AddAction khi nút "Add" được nhấn
+        self.tempPopup = AddActionForm()
+        print('listAction:', self.listAction)
+        self.tempPopup.btnSAVE.clicked.connect(self.save_button_clicked)
+        # self.tempPopup.exec()
 
     def change_robot(self):
         #reset all first
@@ -146,6 +156,16 @@ class Ui(QtWidgets.QMainWindow):
         self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLX[0] )))
         self.endpoint.setItem(self.endpoint.rowCount()-1, 1, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLY[0] )))
         self.endpoint.setItem(self.endpoint.rowCount()-1, 2, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointLZ[0] )))
+        
+        # print('waypointX:', self.canvas.robot.waypointX[-1])
+        # print('waypointY:', self.canvas.robot.waypointY[-1])
+        # print('waypointZ:', self.canvas.robot.waypointZ[-1])
+        # print('waypointRX:', self.canvas.robot.waypointRX[-1])
+        # print('waypointRY:', self.canvas.robot.waypointRY[-1])
+        # print('waypointRZ:', self.canvas.robot.waypointRZ[-1])
+        # print('waypointLX:', self.canvas.robot.waypointLX[-1])
+        # print('waypointLY:', self.canvas.robot.waypointLY[-1])
+        # print('waypointLZ:', self.canvas.robot.waypointLZ[-1])
 
         self.endpoint.scrollToBottom()
 
@@ -232,6 +252,9 @@ class Ui(QtWidgets.QMainWindow):
         for item in currentSelected:
             tempDict[self.ListActionView.row(item)] = item
         tempIndexes = sorted(tempDict)
+
+        print('AFTER listAction:', self.listAction)
+
 
         # define a list to contain the resultant items i.e sorted items
         tempGroup = []

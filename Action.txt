@@ -1,4 +1,4 @@
-HL_wave 6 union 120 5 
-HR_wave 12 union 60 5 
-FR_up 10 union 90 5
-FL_up 8 union 50 5
+HR_wave 11 lock 120 5 
+HL_wave 8 lock 60 5 
+FR_up 10 lock 90 5
+FL_up 8 lock 50 5

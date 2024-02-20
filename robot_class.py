@@ -11,9 +11,12 @@ class TimeTable:
        
         try:
             assert len(homePose.jointValues) == totalRow
+            print('complete timeTable')
             for i in range(totalRow):
                 self.timeTable.append(np.array((homePose.jointValues[i])).ravel())
+                print('timetable[%d]: %s' % (i, self.timeTable[i]))
                 self.originTable.append(np.array((homePose.jointValues[i])).ravel())
+                print('origintable[%d]: %s' % (i, self.originTable[i]))
 
         except:
             raise Exception("Time Table initialize error")
@@ -21,10 +24,15 @@ class TimeTable:
    
     def addAction(self, jointAct):
         if (jointAct.lockType == 'lock'):
+            print('lock.')
             self.lock()
+            # print('id:', jointAct.jointID)
+            # print('targetValue:', jointAct.targetValue)
+            # print('speed:', jointAct.speed)
             self.moveJoint(id = jointAct.jointID, targetValue = jointAct.targetValue, speed = jointAct.speed)
             self.lock()
         elif (jointAct.lockType == 'union'):
+            print('union.')
             self.moveJoint(id = jointAct.jointID, targetValue = jointAct.targetValue, speed = jointAct.speed)        
         else:
             raise Exception("Unknown joint action")
@@ -56,6 +64,7 @@ class TimeTable:
    
     def moveJoint(self,id, targetValue, speed):
         lastValue = self.timeTable[id][-1]
+        print('timeTable:', self.timeTable[:][-1])
         assert (speed > 0)
         if (lastValue > targetValue):
             temp = np.append(np.arange(lastValue, targetValue, -speed), [targetValue])
@@ -70,8 +79,10 @@ class TimeTable:
     def prepare(self, listEvents):
         for i in listEvents:
             if (type(i) is JointAction):
+                print('joint action.')
                 self.addAction(i)
             elif (type(i) is Pose):
+                print('pose.')
                 self.addPose(i)
             else: raise Exception("Time Table prepare error")
 
@@ -95,7 +106,7 @@ class _Robot():
         self.linkColour = ['red', 'yellow', 'black']
         self.jointType = ['r', 'r', 'r']
 
-        self._linkColour = ['red', 'black', 'black', 'yellow']
+        self._linkColour = ['red', 'black', 'black', 'yellow', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black']
         self._jointType = ['r', 'l']
 
 
@@ -176,8 +187,9 @@ class RobotUR5(_Robot):
         self.Q = [0, 0, np.pi/2, np.pi/2, np.pi/2, np.pi/2, 0, np.pi/2, np.pi/2, 0, np.pi/2, np.pi/2]
 
         self.limit = [ (0, 1), (0, 1), (0, np.pi/2), (0, np.pi/2), (0, np.pi*5/6), (0, np.pi/2), 
-                       (-1, 1), (-np.pi*3/2, -np.pi*3/2), (0, 0), 
-                       (0.05, 0.05), (np.pi/6, np.pi/6), (np.pi/3, np.pi*2/3) ]
+                       (-1, 1), (-np.pi*3/2, -np.pi*3/2), (0, 0),          #right
+                    #   vai   , bắp tay                 , cẳng tay
+                       (-1, 1), (-np.pi/2, 0)           , (0, np.pi*8/9) ] #left
 
         self.jointSpeeds = [ 0, 0, np.pi/12, np.pi/12, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/36 ]
         self.poseJointSpeeds = self.jointSpeeds

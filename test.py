@@ -62,6 +62,10 @@ with open(file_path, 'r') as file:
         if line.strip():
             # Tách từ đầu tiên từ dòng
             first_word, *other_values = line.strip().split()
+            print('other_values[0]:', other_values[0])
+            print('other_values[1]:', other_values[1])
+            print('other_values[2]:', other_values[2])
+            print('other_values[3]:', other_values[3])
             
             # Lưu các giá trị còn lại vào biến kiểu dict với từ đầu tiên làm key
             values_dict[first_word] = other_values
