@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>285</height>
+    <width>401</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
     <enum>QTabWidget::Triangular</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <property name="iconSize">
     <size>
@@ -109,118 +109,9 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="Move">
-    <attribute name="title">
-     <string notr="true">Move</string>
-    </attribute>
-    <widget class="QTextEdit" name="txtNameMove">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>10</y>
-       <width>301</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lbNameMove">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>81</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Name action:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lbX">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>X</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lbY">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>120</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Y</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lbZ">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Speed</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="txtX">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>60</y>
-       <width>301</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="txtY">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>110</y>
-       <width>301</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="txtZ">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>160</y>
-       <width>301</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
    <widget class="QWidget" name="ActionBasic">
     <attribute name="title">
-     <string>Action Basic</string>
+     <string>Joint Action</string>
     </attribute>
     <widget class="QListWidget" name="listWidgetActionBasic">
      <property name="geometry">
@@ -228,8 +119,156 @@
        <x>0</x>
        <y>0</y>
        <width>401</width>
-       <height>201</height>
+       <height>191</height>
       </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="Plock">
+    <attribute name="title">
+     <string>Partical Lock</string>
+    </attribute>
+    <widget class="QCheckBox" name="checkBoxALL">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>10</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ALL</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxHR">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Right hand</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxHL">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>50</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Left hand</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxF">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>50</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Foot</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxFJ">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>10</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Follow joint</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxH_9">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>80</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>joint_9</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxH_10">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>100</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>joint_10</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxH_11">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>120</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>joint_11</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxH_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>joint_6</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxH_7">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>joint_7</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxH_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>joint_8</string>
      </property>
     </widget>
    </widget>
@@ -244,7 +283,97 @@
     </rect>
    </property>
    <property name="text">
-    <string>SAVE</string>
+    <string>AddAction</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>270</y>
+     <width>401</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="AddPoseButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>181</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>Add</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>C:/Users/Dat/OneDrive/Desktop/Nhap_mon_tuong_tac_nguoi_may-main/pose.jpg</normalon>
+    </iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>34</width>
+     <height>35</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="NewPoseButton">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>290</y>
+     <width>181</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 127);</string>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>C:/Users/Dat/OneDrive/Desktop/Nhap_mon_tuong_tac_nguoi_may-main/pose.jpg</normalon>
+    </iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>35</width>
+     <height>35</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnJointAction">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>240</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>EditAction</string>
    </property>
   </widget>
  </widget>

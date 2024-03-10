@@ -69,9 +69,13 @@ class DrawWidget(QtWidgets.QWidget):
         self.List_Pose['Home'] = self.robot.QHome
 
     def setJointTrajectory(self, jointTrajectory):
+        # print('Size jointTrajectory', len(jointTrajectory))
         if (jointTrajectory is None): 
+            print('none')
             self.jointTrajectory = self.robot.jointSpace
-        else: self.jointTrajectory = jointTrajectory
+        else: 
+            print('no none')
+            self.jointTrajectory = jointTrajectory
 
     def robot_limit_plot(self):
 
@@ -96,14 +100,20 @@ class DrawWidget(QtWidgets.QWidget):
         self.history_point = []
 
     def all_plot(self):
+
+        print("COUNTER NOW ", self.t_counter, " and total step ", len(self.jointTrajectory))
         if (self.t_counter >= len(self.jointTrajectory)):
             self.drawCurve()
-            self.robot_limit_plot()
+# em thay thanh limit_plot day nay 
+# self.robot_limit_plot()
+            self.plot_pause()
             # output some signal to host to revert back button
             self.plot_done.emit()
             return
 
         self.robot.apply_value(self.jointTrajectory[self.t_counter])
+
+        print("APPLY VALUE ", self.robot.Q)
 
         self.plot()
         # self.robot.Q[0] = np.random.random()*(self.robot.limit[0][1] - self.robot.limit[0][0]) + self.robot.limit[0][0]
@@ -111,10 +121,7 @@ class DrawWidget(QtWidgets.QWidget):
 
     def drawCurve(self):
         temp_array = np.array(self.history_point).T
-        self.axes.plot(temp_array[0], temp_array[1], temp_array[2], 
-                       temp_array[3], temp_array[4], temp_array[5], 
-                       temp_array[6], temp_array[7], temp_array[8],
-                       color = 'k')
+        self.axes.plot(temp_array[0], temp_array[1], color = 'brown')  
         self.canvas.draw()
 
     def refix(self, trim_len = 10):
@@ -129,8 +136,11 @@ class DrawWidget(QtWidgets.QWidget):
 
         self.robot.get_waypoint()
         for i in range(len(self.robot.waypointX) - 1):
-            self.axes.plot([self.robot.waypointX[i], self.robot.waypointX[i+1] ] , [self.robot.waypointY[i], self.robot.waypointY[i+1] ],\
-                '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointZ[i], self.robot.waypointZ[i+1] ], label=str('Link ' + str(i))) 
+            if i == 0:
+                continue  # Đặt màu cho waypoint đầu tiên là màu đen
+            else:
+                self.axes.plot([self.robot.waypointX[i], self.robot.waypointX[i+1] ] , [self.robot.waypointY[i], self.robot.waypointY[i+1] ],\
+                    '*--', color = self.robot.linkColour[i], zs= [self.robot.waypointZ[i], self.robot.waypointZ[i+1] ], label=str('Link ' + str(i))) 
         for i in range(len(self.robot.waypointRX) - 1):
             self.axes.plot([self.robot.waypointRX[i], self.robot.waypointRX[i+1] ] , [self.robot.waypointRY[i], self.robot.waypointRY[i+1] ],\
                 '*--', color = self.robot.linkColour[1], zs= [self.robot.waypointRZ[i], self.robot.waypointRZ[i+1] ], label=str('Link ' + str(i)))
@@ -138,10 +148,7 @@ class DrawWidget(QtWidgets.QWidget):
             self.axes.plot([self.robot.waypointLX[i], self.robot.waypointLX[i+1] ] , [self.robot.waypointLY[i], self.robot.waypointLY[i+1] ],\
                 '*--', color = self.robot.linkColour[1], zs= [self.robot.waypointLZ[i], self.robot.waypointLZ[i+1] ], label=str('Link ' + str(i))) 
                 
-        # self.current_point.append(self.axes.scatter(self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1], marker = 'O', color='purple') )
-        self.history_point.append((self.robot.waypointX[-1], self.robot.waypointY[-1], self.robot.waypointZ[-1],
-                                   self.robot.waypointRX[-1], self.robot.waypointRY[-1], self.robot.waypointRZ[-1],
-                                   self.robot.waypointLX[-1], self.robot.waypointLY[-1], self.robot.waypointLZ[-1]))
+        self.history_point.append((self.robot.waypointX[1], self.robot.waypointY[1]))
 
         self.plot_once.emit()
 
