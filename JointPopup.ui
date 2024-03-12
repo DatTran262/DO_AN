@@ -103,59 +103,13 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Movement</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QFrame" name="frame">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QRadioButton" name="UnionRadioButton">
-          <property name="text">
-           <string>Union</string>
-          </property>
-          <property name="icon">
-           <iconset>
-            <selectedon>chain.png</selectedon>
-           </iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="LockRadioButton">
-          <property name="text">
-           <string>Lock</string>
-          </property>
-          <property name="icon">
-           <iconset>
-            <selectedon>lock.png</selectedon>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item row="3" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Joint</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QSpinBox" name="JointhValue">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -165,14 +119,14 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Target Value</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <widget class="QDoubleSpinBox" name="JointhTargetValue">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -185,14 +139,14 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Speed</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="4" column="1">
       <widget class="QDoubleSpinBox" name="SpeedValue">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

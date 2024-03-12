@@ -21,15 +21,14 @@ listAction = dict()
 listActionName = []
 listActionNameOrigin = []
 
-listLockName = ['All', 'Foot', 'Left hand', 'Right hand']
 listLock = dict()
 
 listZip = dict()
 listZipName = set()
 
-def load_presetAction():
-        file_path = "Action.txt"
+file_path = "Action.txt"
 
+def load_presetAction():
         with open(file_path, 'r') as file:
             for line in file:
                 if line.strip():
@@ -37,6 +36,21 @@ def load_presetAction():
                     entries.append(entrie)
                     entries_dict[entrie] = robot_class.JointAction(entrie, int(other_values[0]), float(other_values[1]), float(other_values[2]))
 load_presetAction()
+
+def replace_first_word_in_file(file_path, key_word, target_word, new_word):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    with open(file_path, 'w') as file:
+        for line in lines:
+            words = line.split()
+            if key_word in words:  # Kiểm tra xem key_word có trong dòng không
+                for i, word in enumerate(words):
+                    if word == target_word:
+                        words[i] = new_word
+                        break
+                line = ' '.join(words) + '\n'
+            file.write(line)
 
 def creatListAction():
     for entry in entries: 
@@ -86,6 +100,8 @@ class Ui(QtWidgets.QMainWindow):
         self.EditActionButton.clicked.connect(self.editJointPopup)
         # self.PoseActionButton.clicked.connect(self.openPoseTab)
         self.ExecuteActionButton.clicked.connect(self.pre_execute)
+        #Add Zip
+        self.btnZip.clicked.connect(self.openAddZip)
         # define initial flag and value
         self.timer = QTimer()
 
@@ -173,12 +189,9 @@ class Ui(QtWidgets.QMainWindow):
         creatListAction()
         listActionName = listActionNameOrigin.copy()
         # print('listAction:', listAction)
-        print('listActionName:', listActionName)
-        print('listActionNameOrigin:', listActionNameOrigin)
 
         self.tempPopup.btnSAVE.clicked.connect(self.save_button_clicked)
         self.tempPopup.btnJointAction.clicked.connect(self.openAddPopup)
-        self.tempPopup.btnZip.clicked.connect(self.openAddZip)
 
         self.tempPopup.AddPoseButton.clicked.connect(self.addPosePopup)
         self.tempPopup.NewPoseButton.clicked.connect(self.setPose)
@@ -319,7 +332,7 @@ class Ui(QtWidgets.QMainWindow):
         self.tempPopup.temmpPopup.ActionButton.clicked.connect(self.saveAction)
         self.tempPopup.temmpPopup.exec()
 
-    def checkAction(self, _name, _jointId, _jointValue, _jointType, _moveType):
+    def checkAction(self, _name, _jointId, _jointValue, _jointType):
         if (self.currentAction == 'Add') and (_name in listActionNameOrigin): raise Exception("Duplicate Name")
         if not(self.canvas.robot.check_limitId(_jointId, _jointValue)): raise Exception("Joint Value wrong")
         if (_jointType) and (self.canvas.robot.jointType[_jointId] == 'l'): raise Exception("Joint Type wrong")
@@ -344,34 +357,22 @@ class Ui(QtWidgets.QMainWindow):
             try:
                 currentName = self.tempPopup.temmpPopup.ActionNameLabel.text()
                 self.checkAction( currentName, self.tempPopup.temmpPopup.JointhValue.value(), self.tempPopup.temmpPopup.JointhTargetValue.value(),\
-                            self.tempPopup.temmpPopup.RevoluteRadioButton.isChecked(), self.tempPopup.temmpPopup.UnionRadioButton.isChecked())
-                listAction[currentName] = robot_class.JointAction(currentName, self.tempPopup.temmpPopup.JointhValue.value(),\
-                                                            'union' if self.tempPopup.temmpPopup.UnionRadioButton.isChecked() else 'lock' , self.tempPopup.temmpPopup.JointhTargetValue.value(), self.tempPopup.temmpPopup.SpeedValue.value() )
+                            self.tempPopup.temmpPopup.RevoluteRadioButton.isChecked())
+                listAction[currentName] = robot_class.JointAction(currentName, self.tempPopup.temmpPopup.JointhValue.value(), self.tempPopup.temmpPopup.JointhTargetValue.value(), self.tempPopup.temmpPopup.SpeedValue.value() )
                 
                 if (self.currentAction == 'Add'):
 
                     newItem = QtWidgets.QListWidgetItem(currentName, type = 404)
-                    if (self.tempPopup.temmpPopup.UnionRadioButton.isChecked()):
-                        newItem.setIcon(QtGui.QIcon("chain.png"))
-                    else:
-                        newItem.setIcon(QtGui.QIcon("lock.png"))
 
                     listActionName.append(currentName)
                     listActionNameOrigin.append(currentName)
                     with open('Action.txt', 'a') as file:
-                        file.write(f'{currentName} {self.tempPopup.temmpPopup.JointhValue.value()} {"union" if self.tempPopup.temmpPopup.UnionRadioButton.isChecked() else "lock"} {self.tempPopup.temmpPopup.JointhTargetValue.value()} {self.tempPopup.temmpPopup.SpeedValue.value()}\n')
+                        file.write(f'{currentName} {self.tempPopup.temmpPopup.JointhValue.value()} {self.tempPopup.temmpPopup.JointhTargetValue.value()} {self.tempPopup.temmpPopup.SpeedValue.value()}\n')
                     self.tempPopup.listWidgetActionBasic.addItem(newItem)
-                    # self.tempPopup.listWidgetActionBasic.clear()
-                    # self.display_file_content()
                     
                 elif (self.currentAction == 'Edit'):
                     assert(self.editName == currentName)
                     item = self.ListActionView.findItems(currentName,Qt.Qt.MatchExactly)[0]
-
-                    if (self.tempPopup.temmpPopup.UnionRadioButton.isChecked()):
-                        item.setIcon(QtGui.QIcon("chain.png"))
-                    else:
-                        item.setIcon(QtGui.QIcon("lock.png"))
 
                 # self.tempPopup.temmpPopup.reject()
             except Exception as eMessage:
@@ -379,40 +380,41 @@ class Ui(QtWidgets.QMainWindow):
                 self.tempPopup.temmpPopup.ErrorLabel.setText(str(eMessage))
 
     def openAddZip(self):
-        self.tempPopup.temmpPopup = AddZip()
-        for i in entries:
-            self.tempPopup.temmpPopup.cbo.addItem(i)
+        self.tempPopup = AddZip()
 
-        self.tempPopup.temmpPopup.btnAdd.clicked.connect(self.skipActionPart)
-        self.tempPopup.temmpPopup.btnBox.clicked.connect(self.addActionPart)
-        self.tempPopup.temmpPopup.exec()
+        lwdActionPart = self.tempPopup.lwdActionPart
+        lwdActionPart.clear()
+        # Lấy danh sách các mục được chọn từ QListWidget nguồn
+        selected_items = self.ListActionView.selectedItems()
+        # Thêm các mục được chọn vào QListWidget đích
+        for item in selected_items:
+            lwdActionPart.addItem(item.text())
 
-    def skipActionPart(self):
-        currentName = self.tempPopup.temmpPopup.cbo.currentText()
-        self.tempPopup.temmpPopup.lwdActionPart.addItem(currentName)
-        # robot_class.Zip.addAction(listAction[currentName])
+        self.tempPopup.btnBox.clicked.connect(self.addActionPart)
+        self.tempPopup.exec()
+        
 
     def addActionPart(self, clickedButton):
-        if clickedButton == \
-                    self.tempPopup.temmpPopup.btnBox.button(QtWidgets.QDialogButtonBox.Cancel):
+        if clickedButton == self.tempPopup.btnBox.button(QtWidgets.QDialogButtonBox.Cancel):
             print("Cancel Zip Successful")
-            self.tempPopup.temmpPopup.reject()
-        elif clickedButton == \
-                    self.tempPopup.temmpPopup.btnBox.button(QtWidgets.QDialogButtonBox.Ok):
+            self.tempPopup.reject()
+        elif clickedButton == self.tempPopup.btnBox.button(QtWidgets.QDialogButtonBox.Ok):
             try:
-                currentZipName = self.tempPopup.temmpPopup.txtNameAction.toPlainText()
+                currentZipName = self.tempPopup.txtNameAction.toPlainText()
+                if currentZipName in listZipName:
+                    raise ValueError('Ten da ton tai.')
                 listZipName.add(currentZipName)
                 listZip[currentZipName] = robot_class.Zip(currentZipName)
-                
-                lwdActionPart = self.tempPopup.temmpPopup.lwdActionPart
-                for index in range(lwdActionPart.count()):
-                    action = listAction[lwdActionPart.item(index).text()]
+                for index in range(self.tempPopup.lwdActionPart.count()):
+                    action = listAction[self.tempPopup.lwdActionPart.item(index).text()]
                     listZip[currentZipName].addAction(action)
-                print('Zip:', listZip)
                 self.ListActionView.addItem(currentZipName)
-                self.tempPopup.temmpPopup.reject()
+                self.tempPopup.reject()  # Chỉ đóng cửa sổ nếu không có lỗi
             except Exception as eMessage:
-                print(eMessage)
+                error_message = str(eMessage)
+                if currentZipName in listZipName:
+                    error_message = 'Tên đã tồn tại. Vui lòng chọn tên khác.'
+                QMessageBox.critical(self, 'Lỗi', error_message)
 
     def pre_execute(self):
         if (self.ExecuteActionButton.text() == "Execute"):
