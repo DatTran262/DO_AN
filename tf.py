@@ -97,10 +97,6 @@ class HomogeneousMatrix(object):
 
     def complete(self, d, theta, a, alpha):
         self.matrix = np.identity(4)
-        # self.set_alpha(alpha)
-        # self.set_a(a)
-        # self.set_theta(theta)
-        # self.set_d(d)
         self.set_d(d)
         self.set_theta(theta)
         self.set_a(a)

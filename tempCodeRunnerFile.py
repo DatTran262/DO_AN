@@ -1,21 +1,17 @@
-    def addActionPart(self, clickedButton):
-        if clickedButton == self.tempPopup.btnBox.button(QtWidgets.QDialogButtonBox.Cancel):
-            print("Cancel Zip Successful")
-            self.tempPopup.reject()
-        elif clickedButton == self.tempPopup.btnBox.button(QtWidgets.QDialogButtonBox.Ok):
-            try:
-                currentZipName = self.tempPopup.txtNameAction.toPlainText()
-                if currentZipName in listZipName:
-                    raise ValueError('Ten da ton tai.')
-                listZipName.add(currentZipName)
-                listZip[currentZipName] = robot_class.Zip(currentZipName)
-                for index in range(self.tempPopup.lwdActionPart.count()):
-                    action = listAction[self.tempPopup.lwdActionPart.item(index).text()]
-                    listZip[currentZipName].addAction(action)
-                self.ListActionView.addItem(currentZipName)
-                self.tempPopup.reject()  # Chỉ đóng cửa sổ nếu không có lỗi
-            except Exception as eMessage:
-                error_message = str(eMessage)
-                if currentZipName in listZipName:
-                    error_message = 'Tên đã tồn tại. Vui lòng chọn tên khác.'
-                QMessageBox.critical(self, 'Lỗi', error_message)
+            temp_part = []
+            if self.tempPopup.checkBoxALL.isChecked(): temp_part.append('A')
+            if self.tempPopup.checkBoxF.isChecked(): temp_part.append('F')
+            if self.tempPopup.checkBoxHL.isChecked(): temp_part.append('L')
+            if self.tempPopup.checkBoxHR.isChecked(): temp_part.append('R')
+            if self.tempPopup.checkBoxH_6.isChecked(): temp_part.append('6')
+            if self.tempPopup.checkBoxH_7.isChecked(): temp_part.append('7')
+            if self.tempPopup.checkBoxH_8.isChecked(): temp_part.append('8')
+            if self.tempPopup.checkBoxH_9.isChecked(): temp_part.append('9')
+            if self.tempPopup.checkBoxH_10.isChecked(): temp_part.append('10')
+            if self.tempPopup.checkBoxH_11.isChecked(): temp_part.append('11')
+
+            str_part = 'P_Lock '
+            for i in temp_part: str_part = str_part + i + ' '
+
+            self.ListActionView.addItem(QtWidgets.QListWidgetItem(str_part, type = 101))
+            listLock[str_part] = robot_class.Lock(temp_part, 0)

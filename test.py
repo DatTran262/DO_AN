@@ -1,21 +1,40 @@
-def replace_first_word_in_file(file_path, key_word, target_word, new_word):
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-
+# Lưu thông tin về các zip vào một tệp văn bản
+def save_zip_info(zip_info, file_path):
     with open(file_path, 'w') as file:
-        for line in lines:
-            words = line.split()
-            if key_word in words:  # Kiểm tra xem key_word có trong dòng không
-                for i, word in enumerate(words):
-                    if word == target_word:
-                        words[i] = new_word
-                        break
-                line = ' '.join(words) + '\n'
-            file.write(line)
+        for zip_code, actions in zip_info.items():
+            file.write(f'Zip {zip_code}:\n')
+            for action in actions:
+                file.write(f'- {action}\n')
 
-# Sử dụng hàm replace_first_word_in_file để thay đổi từ đầu tiên trong mỗi dòng của tệp
-file_path = 'Action.txt'
-key_word = 'HR_wave_1'
-target_word = '11'
-new_word = '10'
-replace_first_word_in_file(file_path, key_word, target_word, new_word)
+# Đọc thông tin về các zip từ tệp văn bản và trả về dưới dạng một từ điển
+def read_zip_info(file_path):
+    zip_info = {}
+    current_zip = None
+    with open(file_path, 'r') as file:
+        for line in file:
+            if line.startswith('Zip'):
+                current_zip = line.split(':')[1].strip()
+                zip_info[current_zip] = []
+            elif line.strip():
+                zip_info[current_zip].append(line.strip())
+    return zip_info
+
+# Dữ liệu cần lưu
+zip_info = {
+    '1001': ['Action 1', 'Action 2'],
+    '1002': ['Action 3', 'Action 4'],
+    '1003': ['Action 5', 'Action 6']
+}
+
+# Ghi thông tin về các zip vào tệp văn bản
+file_path = 'Zip.txt'
+save_zip_info(zip_info, file_path)
+
+# Đọc thông tin về các zip từ tệp văn bản
+read_zip_info = read_zip_info(file_path)
+
+# In ra thông tin đọc được
+for zip_code, actions in read_zip_info.items():
+    print(f'Zip {zip_code}:')
+    for action in actions:
+        print(f'- {action}')

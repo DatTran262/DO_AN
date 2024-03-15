@@ -27,6 +27,7 @@ listZip = dict()
 listZipName = set()
 
 file_path = "Action.txt"
+fileZip_path = 'Zip.txt'
 
 def load_presetAction():
         with open(file_path, 'r') as file:
@@ -37,20 +38,22 @@ def load_presetAction():
                     entries_dict[entrie] = robot_class.JointAction(entrie, int(other_values[0]), float(other_values[1]), float(other_values[2]))
 load_presetAction()
 
-def replace_first_word_in_file(file_path, key_word, target_word, new_word):
+def replace_first_word_in_file(file_path, currentName, JointhValue, JointhTargetValue, SpeedValue):
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
     with open(file_path, 'w') as file:
         for line in lines:
             words = line.split()
-            if key_word in words:  # Kiểm tra xem key_word có trong dòng không
-                for i, word in enumerate(words):
-                    if word == target_word:
-                        words[i] = new_word
-                        break
+            if words and words[0] == currentName:
+                words[1] = f'{JointhValue}'
+                words[2] = f'{JointhTargetValue}'
+                words[3] = f'{SpeedValue}'
                 line = ' '.join(words) + '\n'
+
             file.write(line)
+
+            listAction[currentName] = robot_class.JointAction(currentName, JointhValue, JointhTargetValue, SpeedValue)
 
 def creatListAction():
     for entry in entries: 
@@ -60,6 +63,17 @@ def creatListAction():
         listAction[entry_name] = entries_dict[entry]
 creatListAction()
 
+def readZipInfo(fileZip_path):
+    with open(fileZip_path, 'r') as file:
+            for line in file:
+                if line.strip():
+                    entrie, *other_values = line.strip().split()
+                    listZipName.add(entrie)
+                    listZip[entrie] = robot_class.Zip(entrie)
+                    for index in other_values:
+                        listZip[entrie].addAction(listAction[index])
+readZipInfo(fileZip_path)
+
 class AddActionForm(QtWidgets.QWidget):
 
     def __init__(self):
@@ -67,13 +81,17 @@ class AddActionForm(QtWidgets.QWidget):
         uic.loadUi('AddAction.ui', self)
 
         self.loadActions()
+        self.loadZip()
 
         self.show()
 
     def loadActions(self):
-
         for i in listActionNameOrigin:
             self.listWidgetActionBasic.addItem(i)
+
+    def loadZip(self):
+        for i in listZipName:
+            self.lwdZip.addItem(i)
 
 class ActionPopup(QtWidgets.QDialog):
     def __init__(self):
@@ -116,15 +134,11 @@ class Ui(QtWidgets.QMainWindow):
         # self.endpoint.setColumnCount(3)
         self.endpoint.setHorizontalHeaderLabels(["X", "Y", "Z"])
 
-        # define robot
-        # self.ur_change.toggled.connect(self.change_robot)
         self.change_robot()
         self.show()
 
     def save_button_clicked(self):
-        # Xử lý khi nút "Save" được nhấn
         tempNameSay = self.tempPopup.txtNameSay.toPlainText()
-# need better handle here, but maybe for now is NOT okay
         if self.tempPopup.tabWidgetAction.tabText(self.tempPopup.tabWidgetAction.currentIndex()) == 'Say': 
             currentName = self.tempPopup.txtNameSay.toPlainText()
             if currentName in listActionNameOrigin:
@@ -141,36 +155,37 @@ class Ui(QtWidgets.QMainWindow):
 
                 self.tempPopup.txtNameSay.clear()
                 self.tempPopup.txtSay.clear()
+
         elif self.tempPopup.tabWidgetAction.tabText(self.tempPopup.tabWidgetAction.currentIndex()) == 'Joint Action':
             currentIndex = self.tempPopup.listWidgetActionBasic.currentRow()
             item = self.tempPopup.listWidgetActionBasic.item(currentIndex)
             currentName = item.text()
             self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentName, type = 404))
-        else:
-            if self.tempPopup.checkBoxFJ.isChecked():
-                count = self.ListActionView.count()
-                id_follow = listAction[self.ListActionView.item(count-1).text()].jointID
-                print('id:', id_follow)
-                self.ListActionView.addItem(QtWidgets.QListWidgetItem(str('Follow joint'), type = 101))
-                listLock['Follow joint'] = robot_class.Lock(['Follow joint'], id_follow)
-            else:            
-                temp_part = []
-                if self.tempPopup.checkBoxALL.isChecked(): temp_part.append('A')
-                if self.tempPopup.checkBoxF.isChecked(): temp_part.append('F')
-                if self.tempPopup.checkBoxHL.isChecked(): temp_part.append('L')
-                if self.tempPopup.checkBoxHR.isChecked(): temp_part.append('R')
-                if self.tempPopup.checkBoxH_6.isChecked(): temp_part.append('6')
-                if self.tempPopup.checkBoxH_7.isChecked(): temp_part.append('7')
-                if self.tempPopup.checkBoxH_8.isChecked(): temp_part.append('8')
-                if self.tempPopup.checkBoxH_9.isChecked(): temp_part.append('9')
-                if self.tempPopup.checkBoxH_10.isChecked(): temp_part.append('10')
-                if self.tempPopup.checkBoxH_11.isChecked(): temp_part.append('11')
 
-                str_part = 'P_Lock '
-                for i in temp_part: str_part = str_part + i + ' '
+        elif self.tempPopup.tabWidgetAction.tabText(self.tempPopup.tabWidgetAction.currentIndex()) == 'Action':
+            currentIndex = self.tempPopup.lwdZip.currentRow()
+            item = self.tempPopup.lwdZip.item(currentIndex)
+            currentName = item.text()
+            self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentName, type = 202))
 
-                self.ListActionView.addItem(QtWidgets.QListWidgetItem(str_part, type = 101))
-                listLock[str_part] = robot_class.Lock(temp_part, 0)
+        else:          
+            temp_part = []
+            if self.tempPopup.checkBoxALL.isChecked(): temp_part.append('A')
+            if self.tempPopup.checkBoxF.isChecked(): temp_part.append('F')
+            if self.tempPopup.checkBoxHL.isChecked(): temp_part.append('L')
+            if self.tempPopup.checkBoxHR.isChecked(): temp_part.append('R')
+            if self.tempPopup.checkBoxH_6.isChecked(): temp_part.append('6')
+            if self.tempPopup.checkBoxH_7.isChecked(): temp_part.append('7')
+            if self.tempPopup.checkBoxH_8.isChecked(): temp_part.append('8')
+            if self.tempPopup.checkBoxH_9.isChecked(): temp_part.append('9')
+            if self.tempPopup.checkBoxH_10.isChecked(): temp_part.append('10')
+            if self.tempPopup.checkBoxH_11.isChecked(): temp_part.append('11')
+
+            str_part = 'P_Lock '
+            for i in temp_part: str_part = str_part + i + ' '
+
+            self.ListActionView.addItem(QtWidgets.QListWidgetItem(str_part, type = 101))
+            listLock[str_part] = robot_class.Lock(temp_part, 0)
 
         # check_plock()
         
@@ -188,7 +203,6 @@ class Ui(QtWidgets.QMainWindow):
 # Load file
         creatListAction()
         listActionName = listActionNameOrigin.copy()
-        # print('listAction:', listAction)
 
         self.tempPopup.btnSAVE.clicked.connect(self.save_button_clicked)
         self.tempPopup.btnJointAction.clicked.connect(self.openAddPopup)
@@ -372,9 +386,9 @@ class Ui(QtWidgets.QMainWindow):
                     
                 elif (self.currentAction == 'Edit'):
                     assert(self.editName == currentName)
-                    item = self.ListActionView.findItems(currentName,Qt.Qt.MatchExactly)[0]
+                    replace_first_word_in_file(file_path, currentName, self.tempPopup.temmpPopup.JointhValue.value(), self.tempPopup.temmpPopup.JointhTargetValue.value(), self.tempPopup.temmpPopup.SpeedValue.value())
 
-                # self.tempPopup.temmpPopup.reject()
+                self.tempPopup.temmpPopup.reject()
             except Exception as eMessage:
                 print(eMessage)
                 self.tempPopup.temmpPopup.ErrorLabel.setText(str(eMessage))
@@ -386,9 +400,11 @@ class Ui(QtWidgets.QMainWindow):
         lwdActionPart.clear()
         # Lấy danh sách các mục được chọn từ QListWidget nguồn
         selected_items = self.ListActionView.selectedItems()
+        print('itemSelect:', selected_items)
         # Thêm các mục được chọn vào QListWidget đích
         for item in selected_items:
-            lwdActionPart.addItem(item.text())
+            if item.type() == 404:
+                lwdActionPart.addItem(item.text())
 
         self.tempPopup.btnBox.clicked.connect(self.addActionPart)
         self.tempPopup.exec()
@@ -401,15 +417,15 @@ class Ui(QtWidgets.QMainWindow):
         elif clickedButton == self.tempPopup.btnBox.button(QtWidgets.QDialogButtonBox.Ok):
             try:
                 currentZipName = self.tempPopup.txtNameAction.toPlainText()
-                if currentZipName in listZipName:
-                    raise ValueError('Ten da ton tai.')
+                print('nameZip:', currentZipName)
+                print('listZipName:', listZipName)
                 listZipName.add(currentZipName)
                 listZip[currentZipName] = robot_class.Zip(currentZipName)
                 for index in range(self.tempPopup.lwdActionPart.count()):
                     action = listAction[self.tempPopup.lwdActionPart.item(index).text()]
                     listZip[currentZipName].addAction(action)
-                self.ListActionView.addItem(currentZipName)
-                self.tempPopup.reject()  # Chỉ đóng cửa sổ nếu không có lỗi
+                self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentZipName, type = 202))
+                self.tempPopup.reject()
             except Exception as eMessage:
                 error_message = str(eMessage)
                 if currentZipName in listZipName:

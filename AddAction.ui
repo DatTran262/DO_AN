@@ -35,7 +35,7 @@
     <enum>QTabWidget::Triangular</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <property name="iconSize">
     <size>
@@ -131,7 +131,7 @@
     <widget class="QCheckBox" name="checkBoxALL">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>150</x>
        <y>10</y>
        <width>81</width>
        <height>20</height>
@@ -178,19 +178,6 @@
      </property>
      <property name="text">
       <string>Foot</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBoxFJ">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>10</y>
-       <width>101</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Follow joint</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBoxH_9">
@@ -249,7 +236,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>110</y>
+       <y>100</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -262,13 +249,28 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>130</y>
+       <y>120</y>
        <width>91</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>joint_8</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="Zip">
+    <attribute name="title">
+     <string>Action</string>
+    </attribute>
+    <widget class="QListWidget" name="lwdZip">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>401</width>
+       <height>201</height>
+      </rect>
      </property>
     </widget>
    </widget>
