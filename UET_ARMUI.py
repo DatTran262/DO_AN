@@ -10,6 +10,7 @@ import numpy as np
 import sys
 from math import radians
 import math
+import re
 
 import robot_class
 import robot_matplot
@@ -64,14 +65,20 @@ def creatListAction():
 creatListAction()
 
 def readZipInfo(fileZip_path):
-    with open(fileZip_path, 'r') as file:
+    with open(fileZip_path, 'r', encoding='utf-8') as file:
             for line in file:
                 if line.strip():
                     entrie, *other_values = line.strip().split()
                     listZipName.add(entrie)
                     listZip[entrie] = robot_class.Zip(entrie)
                     for index in other_values:
-                        listZip[entrie].addAction(listAction[index])
+                        print('index:', index)
+                        if index.startswith('P_Lock'):
+                            listZip[entrie].addAction(robot_class.Lock(index.split("_")[2:], 0))
+                            # print('tempart:',index.split("_")[2:])
+                        else:
+                            listZip[entrie].addAction(listAction[index])
+                    
 readZipInfo(fileZip_path)
 
 class AddActionForm(QtWidgets.QWidget):
@@ -186,8 +193,6 @@ class Ui(QtWidgets.QMainWindow):
 
             self.ListActionView.addItem(QtWidgets.QListWidgetItem(str_part, type = 101))
             listLock[str_part] = robot_class.Lock(temp_part, 0)
-
-        # check_plock()
         
         # self.tempPopup.close()
 
@@ -400,11 +405,12 @@ class Ui(QtWidgets.QMainWindow):
         lwdActionPart.clear()
         # Lấy danh sách các mục được chọn từ QListWidget nguồn
         selected_items = self.ListActionView.selectedItems()
-        print('itemSelect:', selected_items)
         # Thêm các mục được chọn vào QListWidget đích
         for item in selected_items:
             if item.type() == 404:
                 lwdActionPart.addItem(item.text())
+            elif item.type() == 101:
+                continue
 
         self.tempPopup.btnBox.clicked.connect(self.addActionPart)
         self.tempPopup.exec()
@@ -417,8 +423,6 @@ class Ui(QtWidgets.QMainWindow):
         elif clickedButton == self.tempPopup.btnBox.button(QtWidgets.QDialogButtonBox.Ok):
             try:
                 currentZipName = self.tempPopup.txtNameAction.toPlainText()
-                print('nameZip:', currentZipName)
-                print('listZipName:', listZipName)
                 listZipName.add(currentZipName)
                 listZip[currentZipName] = robot_class.Zip(currentZipName)
                 for index in range(self.tempPopup.lwdActionPart.count()):

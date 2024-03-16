@@ -30,7 +30,6 @@ class TimeTable:
         self.lock()
 
     def addLock(self, lockAct):
-        
         global flag_lock_part
         for i in range(0, 12): flag_lock_part[i] = 0
 
@@ -59,9 +58,6 @@ class TimeTable:
             maxLen = max(maxLen, len(_row))
         return maxLen
 
-    def max_len_follow_joint(self, id):
-        return len(self.timeTable[id])
-
     def lock(self):
         max_rowLen = self.max_len()
        
@@ -74,7 +70,6 @@ class TimeTable:
 
     def lock_part(self):
         max_rowLen = self.max_len()
-        #lockkid = self.check_lock_part(namePart)
         for i, v in enumerate(self.timeTable):
             if flag_lock_part[i] == 1 and (len(v) < max_rowLen):
                 last_value = v[-1]
@@ -147,38 +142,7 @@ class Zip:
         self.container.append(new_action)
 
     def deleteAction(self, action):
-        self.container.remove(action)
-
-class ActionGroup:
-    def __init__(self):
-        self.actions = []
-
-    def add_action(self, action):
-        self.actions.append(action)
-
-    def zip_actions(self):
-        # Gộp các thông tin của các hành động thành một danh sách
-        action_data = []
-        for action in self.actions:
-            if isinstance(action, JointAction):
-                action_data.append((action.name, action.jointID, action.lockType, action.targetValue, action.speed))
-            elif isinstance(action, Pose):
-                action_data.append((action.name, action.jointValues, action.jointSpeeds))
-        return action_data
-
-    @classmethod
-    def unzip_actions(cls, actions_data):
-        # Tạo các đối tượng JointAction hoặc Pose từ dữ liệu gộp
-        action_group = cls()
-        for data in actions_data:
-            if len(data) == 5:  # JointAction
-                name, jointID, lockType, targetValue, speed = data
-                action = JointAction(name, jointID, lockType, targetValue, speed)
-            elif len(data) == 3:  # Pose
-                name, jointValues, jointSpeeds = data
-                action = Pose(name, jointValues, jointSpeeds)
-            action_group.add_action(action)
-        return action_group        
+        self.container.remove(action)  
 
 class _Robot():
     def __init__(self):
@@ -261,8 +225,8 @@ class RobotUR5(_Robot):
         self.numJoint = 12
         self.linkColour = self._linkColour[:self.numJoint]
         self.jointBodyType = ['l', 'l', 'r', 'r', 'r','r']
-        self.jointArmTypeR = ['l', 'r', 'r']
-        self.jointArmTypeL = ['l', 'r', 'r']
+        self.jointArmTypeR = ['r', 'r', 'r']
+        self.jointArmTypeL = ['r', 'r', 'r']
         self.jointType = self.jointBodyType + self.jointArmTypeR + self.jointArmTypeL
 
 
@@ -271,11 +235,11 @@ class RobotUR5(_Robot):
 
         self.Q = [0, 0, np.pi/2, 0, 0, np.pi/2,
                   0, np.pi/2, 0, 
-                  0, -np.pi/2, 0]
+                  np.pi, -np.pi/2, 0]
 
-        self.limit = [ (-1, 1), (-1, 1), (np.pi/6-0.01, np.pi/2+0.01), (-0.01, np.pi*5/6+0.01), (-0.01, np.pi/2+0.01), (-0.01, np.pi/2+0.01), 
-                       (-np.pi/2-0.01, np.pi/2+0.01), (-np.pi-0.01, np.pi*3/2+0.01), (-0.01, np.pi*8/9+0.01),          #right
-                       (-np.pi/2-0.01, np.pi/2+0.01), (-np.pi/2-0.01, np.pi/2+0.01), (-0.01, np.pi*8/9+0.01) ] #left
+        self.limit = [ (-5, 5), (-5, 5), (np.pi/6-0.01, np.pi/2+0.01), (-0.01, np.pi*5/6+0.01), (-0.01, np.pi/2+0.01), (-0.01, np.pi/2+0.01), 
+                       (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi*3/2+0.01), (-0.01, np.pi*8/9+0.01),          #right
+                       (-np.pi-0.01, np.pi+0.01), (-np.pi/2-0.01, np.pi/2+0.01), (-0.01, np.pi*8/9+0.01) ] #left
 
         self.jointSpeeds = [ 0.1, 0.1, np.pi/12, np.pi/12, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/36, 0.05, np.pi/12, np.pi/36 ]
         self.poseJointSpeeds = self.jointSpeeds
@@ -317,6 +281,9 @@ class RobotUR5(_Robot):
         self.joint10 = HomogeneousMatrix()
         self.joint11 = HomogeneousMatrix()
 
+        self.joint89 = HomogeneousMatrix()
+
+
 
     def forward_kinematic(self):
         self.base.complete  (0        , 0        , self.Q[0], 0        )
@@ -326,17 +293,17 @@ class RobotUR5(_Robot):
         self.joint4.complete(self.L[2], self.Q[5], 0        , 0        )
 
         # Join transfer
-        self.joint5.complete(self.L[3], 0        , 0        , 0        )
+        self.joint5.complete(self.L[3], 0        , 0        , -np.pi/2)
 
         #Join arm right
-        self.joint6.complete(0        , 0        , self.L[4], -np.pi/2 )
+        self.joint6.complete(0        , 0        , self.L[4], self.Q[6])
         self.joint7.complete(0        , self.Q[7], self.L[6], 0        )
         self.joint8.complete(0        , self.Q[8], self.L[7], 0        )
 
         #Join arm left
-        self.joint9.complete (0        , self.Q[9] , self.L[5], np.pi/2)
-        self.joint10.complete(0        , self.Q[10], self.L[6], 0      )
-        self.joint11.complete(0        , self.Q[11], self.L[7], 0      )
+        self.joint9.complete (0        , 0         , self.L[5], self.Q[9])
+        self.joint10.complete(0        , self.Q[10], self.L[6], 0        )
+        self.joint11.complete(0        , self.Q[11], self.L[7], 0        )
 
         # ---------------------------------
         self.joint1.set_parent(self.base.get())
@@ -346,6 +313,7 @@ class RobotUR5(_Robot):
 
         self.joint5.set_parent(self.joint2.get())
 
+        # self.joint89.set_parent(self.joint5.get())
         self.joint6.set_parent(self.joint5.get())
         self.joint7.set_parent(self.joint6.get())
         self.joint8.set_parent(self.joint7.get())

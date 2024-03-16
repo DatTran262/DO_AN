@@ -1,2 +1,4 @@
 HL HL_wave_1 HL_wave_2 HL_wave_3 HL_wave_2 HL_wave_3 HL_wave_4
 HR HR_wave_1 HR_wave_2 HR_wave_3 HR_wave_2 HR_wave_3 HR_wave_4
+T P_Lock_10_11_7_8 HR_wave_1 HR_wave_2 HR_wave_3 HR_wave_2 HR_wave_3 HR_wave_4 P_Lock
+Đ P_Lock_10_11_7_8 HL_wave_1 HL_wave_2 HL_wave_3 HL_wave_2 HL_wave_3 HL_wave_4 P_Lock
