@@ -72,13 +72,10 @@ def readZipInfo(fileZip_path):
                     listZipName.add(entrie)
                     listZip[entrie] = robot_class.Zip(entrie)
                     for index in other_values:
-                        print('index:', index)
                         if index.startswith('P_Lock'):
                             listZip[entrie].addAction(robot_class.Lock(index.split("_")[2:], 0))
-                            # print('tempart:',index.split("_")[2:])
                         else:
-                            listZip[entrie].addAction(listAction[index])
-                    
+                            listZip[entrie].addAction(listAction[index])         
 readZipInfo(fileZip_path)
 
 class AddActionForm(QtWidgets.QWidget):
@@ -205,9 +202,10 @@ class Ui(QtWidgets.QMainWindow):
         # Hiển thị dialog AddAction khi nút "Add" được nhấn
         self.tempPopup = AddActionForm()
 
+        listActionName = listActionNameOrigin.copy()
+
 # Load file
         creatListAction()
-        listActionName = listActionNameOrigin.copy()
 
         self.tempPopup.btnSAVE.clicked.connect(self.save_button_clicked)
         self.tempPopup.btnJointAction.clicked.connect(self.openAddPopup)
@@ -405,12 +403,15 @@ class Ui(QtWidgets.QMainWindow):
         lwdActionPart.clear()
         # Lấy danh sách các mục được chọn từ QListWidget nguồn
         selected_items = self.ListActionView.selectedItems()
+
+        print('listZipName:', listZipName)
+
         # Thêm các mục được chọn vào QListWidget đích
         for item in selected_items:
             if item.type() == 404:
-                lwdActionPart.addItem(item.text())
+                lwdActionPart.addItem(QtWidgets.QListWidgetItem(item.text(), type = 404))
             elif item.type() == 101:
-                continue
+                lwdActionPart.addItem(QtWidgets.QListWidgetItem(item.text(), type = 101))
 
         self.tempPopup.btnBox.clicked.connect(self.addActionPart)
         self.tempPopup.exec()
@@ -424,11 +425,31 @@ class Ui(QtWidgets.QMainWindow):
             try:
                 currentZipName = self.tempPopup.txtNameAction.toPlainText()
                 listZipName.add(currentZipName)
-                listZip[currentZipName] = robot_class.Zip(currentZipName)
+                listZip[currentZipName] = robot_class.Zip(currentZipName)   
+
+                line_to_write = currentZipName                 
+
                 for index in range(self.tempPopup.lwdActionPart.count()):
-                    action = listAction[self.tempPopup.lwdActionPart.item(index).text()]
-                    listZip[currentZipName].addAction(action)
+                    namePart = self.tempPopup.lwdActionPart.item(index).text()
+                    if self.tempPopup.lwdActionPart.item(index).type() == 404:
+                        action = listAction[namePart]
+                        listZip[currentZipName].addAction(action)
+                        line_to_write += " " + namePart
+                    elif self.tempPopup.lwdActionPart.item(index).type() == 101:
+                        print('namePart:', namePart)
+                        print("listLockPart:", namePart.split("P_Lock ")[1].split())
+                        listZip[currentZipName].addAction(robot_class.Lock(namePart.split("P_Lock ")[1].split(), 0))
+                        
+                        parts = namePart.split()
+                        new_name = parts[0] + "_" + "_".join(parts[1:])
+                        
+                        line_to_write += " " + new_name
+
+                    with open("Zip.txt", "a") as f:
+                        f.write(line_to_write + "\n")
+
                 self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentZipName, type = 202))
+
                 self.tempPopup.reject()
             except Exception as eMessage:
                 error_message = str(eMessage)

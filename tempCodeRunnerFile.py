@@ -1,2 +1,2 @@
-                            # temp_part = []
-                            # temp_part.append(index.split("_")[2:])
+                    # lock_actions = []
+                    # lock_actions.append(namePart.split("_")[2:])

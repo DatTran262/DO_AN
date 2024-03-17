@@ -1,5 +1,9 @@
-line = "P_Lock_10_11"
-lock_actions = []
-parts = line.split("_")[2:]  # Bắt đầu từ index 2 để loại bỏ "P_Lock" và phần số đầu tiên
-lock_actions.append(parts)
-print(lock_actions)
+namePart = "P_Lock 8 9 10"
+
+# Tách chuỗi thành các phần tử
+parts = namePart.split()
+
+# Tạo chuỗi mới bằng cách nối các phần tử với nhau, sử dụng dấu gạch dưới (_) thay vì khoảng trắng
+new_name = parts[0] + "_" + "_".join(parts[1:])
+
+print(new_name)

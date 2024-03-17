@@ -230,18 +230,18 @@ class RobotUR5(_Robot):
         self.jointType = self.jointBodyType + self.jointArmTypeR + self.jointArmTypeL
 
 
-        self.L = [0.28, 0.17, 0.05, 0.17, -0.05, 0.05, 0.12, 0.08] #khớp chân có bắp chân dài 0.15, cẳng chân dài 0.13
+        self.L = [0.28, 0.17, 0.05, 0.17, -0.05, 0.05, 0.12, 0.08]
 
 
         self.Q = [0, 0, np.pi/2, 0, 0, np.pi/2,
                   0, np.pi/2, 0, 
                   np.pi, -np.pi/2, 0]
 
-        self.limit = [ (-5, 5), (-5, 5), (np.pi/6-0.01, np.pi/2+0.01), (-0.01, np.pi*5/6+0.01), (-0.01, np.pi/2+0.01), (-0.01, np.pi/2+0.01), 
-                       (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi*3/2+0.01), (-0.01, np.pi*8/9+0.01),          #right
-                       (-np.pi-0.01, np.pi+0.01), (-np.pi/2-0.01, np.pi/2+0.01), (-0.01, np.pi*8/9+0.01) ] #left
+        self.limit = [ (-5, 5), (-5, 5), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), 
+                       (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi*4+0.01), (-np.pi-0.01, np.pi+0.01),  #right
+                       (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01) ] #left
 
-        self.jointSpeeds = [ 0.1, 0.1, np.pi/12, np.pi/12, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/36, 0.05, np.pi/12, np.pi/36 ]
+        self.jointSpeeds = [ 0.1, 0.1, np.pi/12, np.pi/12, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12 ]
         self.poseJointSpeeds = self.jointSpeeds
         self.gen_jointSpeeds()
 
@@ -261,7 +261,7 @@ class RobotUR5(_Robot):
         self.waypointLZ = [0, 0, 0]
 
         self.jointSpace = []
-        self.pointStep = 3
+        self.pointStep = 1
         self.gen_jointSpace()
         self.init_dh()
         self.get_waypoint()
