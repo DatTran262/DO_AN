@@ -1,9 +1,19 @@
-namePart = "P_Lock 8 9 10"
+# # Timetable chứa các hàng chứa giá trị cuối cùng cần lưu
+# timetable = [[1, 2, 3, 4, 5], [1, 5, 7, 2], [1, 34, 45, 4],[1, 2, 3, 4, 5], [1, 5, 7, 2], [1, 34, 45, 4], [1, 2, 3, 4, 5], [1, 5, 7, 2], [1, 34, 45, 4]]
 
-# Tách chuỗi thành các phần tử
-parts = namePart.split()
+# # Đường dẫn đến file txt để lưu trữ giá trị
+file_path = "D:\\Workspace\\timeTable.txt"
 
-# Tạo chuỗi mới bằng cách nối các phần tử với nhau, sử dụng dấu gạch dưới (_) thay vì khoảng trắng
-new_name = parts[0] + "_" + "_".join(parts[1:])
+# # Mở file txt để ghi dữ liệu
+# with open(file_path, "w") as file:
+#     # Ghi các giá trị cuối cùng của mỗi hàng từ timetable vào file
+#     for row in timetable:
+#         last_value = row[-1]  # Lấy giá trị cuối cùng của hàng
+#         file.write(f"{last_value} ")
 
-print(new_name)
+with open(file_path, 'r') as f:
+    arrayfloat = []
+    for value in f:
+        value.strip().split(' ')
+        arrayfloat.append(value)
+    print('value:', arrayfloat)

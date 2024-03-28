@@ -69,7 +69,6 @@ class DrawWidget(QtWidgets.QWidget):
         self.List_Pose['Home'] = self.robot.QHome
 
     def setJointTrajectory(self, jointTrajectory):
-        # print('Size jointTrajectory', len(jointTrajectory))
         if (jointTrajectory is None): 
             print('none')
             self.jointTrajectory = self.robot.jointSpace
