@@ -445,8 +445,8 @@ class Ui(QtWidgets.QMainWindow):
                         
                         line_to_write += " " + new_name
 
-                    with open("Zip.txt", "a") as f:
-                        f.write(line_to_write + "\n")
+                with open("Zip.txt", "a") as f:
+                    f.write(line_to_write + "\n")
 
                 self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentZipName, type = 202))
 
