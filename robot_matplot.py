@@ -99,6 +99,9 @@ class DrawWidget(QtWidgets.QWidget):
         self.history_point = []
 
     def all_plot(self):
+        file = "D:\\Workspace\\timeTable.txt"
+        # with open(file, "w") as f:
+        #     f.truncate(0)
 
         print("COUNTER NOW ", self.t_counter, " and total step ", len(self.jointTrajectory))
         if (self.t_counter >= len(self.jointTrajectory)):
@@ -111,8 +114,11 @@ class DrawWidget(QtWidgets.QWidget):
             return
 
         self.robot.apply_value(self.jointTrajectory[self.t_counter])
-
-        print("APPLY VALUE ", self.robot.Q)
+        # print("self.jointTrajectory[self.t_counter]:", self.jointTrajectory[self.t_counter])
+        with open(file, "w") as f:
+            for row in self.jointTrajectory[self.t_counter]:
+                f.write(f"{row} ")
+        # print("APPLY VALUE ", self.robot.Q)
 
         self.plot()
         # self.robot.Q[0] = np.random.random()*(self.robot.limit[0][1] - self.robot.limit[0][0]) + self.robot.limit[0][0]

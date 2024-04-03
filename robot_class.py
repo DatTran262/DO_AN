@@ -338,7 +338,6 @@ class RobotUR5(_Robot):
 
 
     def get_waypoint(self):
-
         print("?????? ", self.check_limit())
         if not (self.check_limit()): return False
         self.forward_kinematic()

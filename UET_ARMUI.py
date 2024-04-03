@@ -142,25 +142,7 @@ class Ui(QtWidgets.QMainWindow):
         self.show()
 
     def save_button_clicked(self):
-        tempNameSay = self.tempPopup.txtNameSay.toPlainText()
-        if self.tempPopup.tabWidgetAction.tabText(self.tempPopup.tabWidgetAction.currentIndex()) == 'Say': 
-            currentName = self.tempPopup.txtNameSay.toPlainText()
-            if currentName in listActionNameOrigin:
-                msgBox = QMessageBox()
-                msgBox.setIcon(QMessageBox.Warning)
-                msgBox.setText("Tên đã tồn tại trong danh sách.")
-                msgBox.setWindowTitle("Warning Box")
-
-                returnValue = msgBox.exec()
-                self.tempPopup.txtNameMove.clear()
-
-            else:
-                self.ListActionView.addItem(currentName + ": " + self.tempPopup.txtSay.toPlainText())
-
-                self.tempPopup.txtNameSay.clear()
-                self.tempPopup.txtSay.clear()
-
-        elif self.tempPopup.tabWidgetAction.tabText(self.tempPopup.tabWidgetAction.currentIndex()) == 'Joint Action':
+        if self.tempPopup.tabWidgetAction.tabText(self.tempPopup.tabWidgetAction.currentIndex()) == 'Joint Action':
             currentIndex = self.tempPopup.listWidgetActionBasic.currentRow()
             item = self.tempPopup.listWidgetActionBasic.item(currentIndex)
             currentName = item.text()
@@ -212,7 +194,65 @@ class Ui(QtWidgets.QMainWindow):
 
         self.tempPopup.AddPoseButton.clicked.connect(self.addPosePopup)
         self.tempPopup.NewPoseButton.clicked.connect(self.setPose)
+        self.tempPopup.btnClear.clicked.connect(self.clearCheckBoxs)
+        self.tempPopup.checkBoxALL.clicked.connect(self.checkBoxsAll)
+        self.tempPopup.checkBoxHL.clicked.connect(self.checkBoxsHL)
+        self.tempPopup.checkBoxHR.clicked.connect(self.checkBoxsHR)
         # self.tempPopup.exec()
+
+    def clearCheckBoxs(self):
+        self.tempPopup.checkBoxALL.setChecked(False)
+        self.tempPopup.checkBoxF.setChecked(False)
+        self.tempPopup.checkBoxHL.setChecked(False)
+        self.tempPopup.checkBoxHR.setChecked(False)
+        self.tempPopup.checkBoxH_6.setChecked(False)
+        self.tempPopup.checkBoxH_7.setChecked(False)
+        self.tempPopup.checkBoxH_8.setChecked(False)
+        self.tempPopup.checkBoxH_9.setChecked(False)
+        self.tempPopup.checkBoxH_10.setChecked(False)
+        self.tempPopup.checkBoxH_11.setChecked(False)
+
+    def checkBoxsAll(self):
+        if self.tempPopup.checkBoxALL.checkState() == QtCore.Qt.Checked:
+            self.tempPopup.checkBoxF.setChecked(True)
+            self.tempPopup.checkBoxHL.setChecked(True)
+            self.tempPopup.checkBoxHR.setChecked(True)
+            self.tempPopup.checkBoxH_6.setChecked(True)
+            self.tempPopup.checkBoxH_7.setChecked(True)
+            self.tempPopup.checkBoxH_8.setChecked(True)
+            self.tempPopup.checkBoxH_9.setChecked(True)
+            self.tempPopup.checkBoxH_10.setChecked(True)
+            self.tempPopup.checkBoxH_11.setChecked(True)
+        else:
+            self.tempPopup.checkBoxF.setChecked(False)
+            self.tempPopup.checkBoxHL.setChecked(False)
+            self.tempPopup.checkBoxHR.setChecked(False)
+            self.tempPopup.checkBoxH_6.setChecked(False)
+            self.tempPopup.checkBoxH_7.setChecked(False)
+            self.tempPopup.checkBoxH_8.setChecked(False)
+            self.tempPopup.checkBoxH_9.setChecked(False)
+            self.tempPopup.checkBoxH_10.setChecked(False)
+            self.tempPopup.checkBoxH_11.setChecked(False)
+
+    def checkBoxsHL(self):
+        if self.tempPopup.checkBoxHL.checkState() == QtCore.Qt.Checked:
+            self.tempPopup.checkBoxH_9.setChecked(True)
+            self.tempPopup.checkBoxH_10.setChecked(True)
+            self.tempPopup.checkBoxH_11.setChecked(True)
+        else:
+            self.tempPopup.checkBoxH_9.setChecked(False)
+            self.tempPopup.checkBoxH_10.setChecked(False)
+            self.tempPopup.checkBoxH_11.setChecked(False)
+
+    def checkBoxsHR(self):
+        if self.tempPopup.checkBoxHR.checkState() == QtCore.Qt.Checked:
+            self.tempPopup.checkBoxH_6.setChecked(True)
+            self.tempPopup.checkBoxH_7.setChecked(True)
+            self.tempPopup.checkBoxH_8.setChecked(True)
+        else:
+            self.tempPopup.checkBoxH_6.setChecked(False)
+            self.tempPopup.checkBoxH_7.setChecked(False)
+            self.tempPopup.checkBoxH_8.setChecked(False)
 
     def change_robot(self):
         #reset all first
@@ -232,7 +272,6 @@ class Ui(QtWidgets.QMainWindow):
         if (self.ExecuteActionButton.text() == "Pause"):
             self.ExecuteActionButton.setText("Execute")
 
-    #
     def update_endpointView(self): # in ra điểm base với tọa độ X, Y, speed cua robot
         self.endpoint.insertRow(self.endpoint.rowCount())
         self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointX[1] )))

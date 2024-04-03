@@ -35,7 +35,7 @@
     <enum>QTabWidget::Triangular</enum>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <property name="iconSize">
     <size>
@@ -49,66 +49,6 @@
    <property name="tabBarAutoHide">
     <bool>false</bool>
    </property>
-   <widget class="QWidget" name="Say">
-    <attribute name="title">
-     <string>Say</string>
-    </attribute>
-    <widget class="QLabel" name="lbNameSay">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Name action:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="txtNameSay">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>10</y>
-       <width>291</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QPlainTextEdit" name="txtSay">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>60</y>
-       <width>291</width>
-       <height>131</height>
-      </rect>
-     </property>
-     <property name="plainText">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lbSay">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>71</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Say:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </widget>
    <widget class="QWidget" name="ActionBasic">
     <attribute name="title">
      <string>Joint Action</string>
@@ -119,7 +59,7 @@
        <x>0</x>
        <y>0</y>
        <width>401</width>
-       <height>191</height>
+       <height>201</height>
       </rect>
      </property>
     </widget>
@@ -256,6 +196,19 @@
      </property>
      <property name="text">
       <string>joint_8</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnClear">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>160</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear</string>
      </property>
     </widget>
    </widget>
