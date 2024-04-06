@@ -237,9 +237,9 @@ class RobotUR5(_Robot):
                   0, np.pi/2, 0, 
                   np.pi, -np.pi/2, 0]
 
-        self.limit = [ (-5, 5), (-5, 5), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), 
-                       (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi*4+0.01), (-np.pi-0.01, np.pi+0.01),  #right
-                       (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01), (-np.pi-0.01, np.pi+0.01) ] #left
+        self.limit = [ (-5, 5), (-5, 5), (-np.pi*4-0.01, np.pi*4+0.01), (-np.pi*2-0.01, np.pi*2+0.01), (-np.pi*2-0.01, np.pi*2+0.01), (-np.pi*2-0.01, np.pi*2+0.01), 
+                       (-np.pi*2-0.01, np.pi*2+0.01), (-np.pi*2-0.01, np.pi*2+0.01), (-np.pi*2-0.01, np.pi*2+0.01),  #right
+                       (-np.pi*2-0.01, np.pi*2+0.01), (-np.pi*2-0.01, np.pi*2+0.01), (-np.pi*2-0.01, np.pi*2+0.01) ] #left
 
         self.jointSpeeds = [ 0.1, 0.1, np.pi/12, np.pi/12, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12, 0.05, np.pi/12, np.pi/12 ]
         self.poseJointSpeeds = self.jointSpeeds

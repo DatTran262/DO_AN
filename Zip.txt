@@ -1,10 +1,27 @@
-HL P_Lock_L_7_8 HL_wave_1 HL_wave_2 HL_wave_3 HL_wave_2 HL_wave_3 HL_wave_4
-HR P_Lock_R_10_11 HR_wave_1 HR_wave_2 HR_wave_3 HR_wave_2 HR_wave_3 HR_wave_4
-T P_Lock_10_11_7_8 HR_wave_1 HR_wave_2 HR_wave_3 HR_wave_2 HR_wave_3 HR_wave_4 P_Lock
-Đ P_Lock_10_11_7_8 HL_wave_1 HL_wave_2 HL_wave_3 HL_wave_2 HL_wave_3 HL_wave_4 P_Lock
-missgrand P_Lock_L_7_8 HL_wave_1 HL_wave_2 HL_wave_3 HL_wave_2 HL_wave_3 HL_wave_4 P_Lock P_Lock_R_10_11 HR_wave_1 HR_wave_2 HR_wave_3 HR_wave_2 HR_wave_3 HR_wave_4 P_Lock Move
-exercise P_Lock_6_9 HR_exercise_1 HL_exercise_1 HR_exercise_2 HL_exercise_2 P_Lock_ HR_exercise_3 HL_exercise_3 HR_exercise_4 HL_exercise_4 HR_exercise_5 HL_exercise_5
-exercise2 P_Lock_F_6_9 HR_exercise_2 HL_exercise_2 P_Lock_7_10 F3_exercise2_3 HR_exercise_3 HL_exercise_3 P_Lock_F_7_10 HR_exercise2_3 HL_exercise2_3 P_Lock_F_6_9 F3_exercise2_4 HR_exercise2_4 HL_exercise2_4 P_Lock_7_10 HR_exercise_5 HL_exercise_5 P_Lock_ HL_exercise_4 HR_exercise_4
-HL_RAW HL_wave_1 HL_wave_2 HL_wave_3 HL_wave_2 HL_wave_3 HL_wave_4
-HR_RAW HR_wave_1 HR_wave_2 HR_wave_3 HR_wave_2 HR_wave_3 HR_wave_4
-Test DDat P_Lock_R_10_11 P_Lock_F P_Lock_
+Hello P_Lock_8 BapTayPhai120 P_Lock_7 CangTayPhai135 J8_home CangTayPhai135 J8_home P_Lock_ J7_home
+HaiTaySangNgang VaiPhai90 VaiTrai90
+XoayNguoi BapTayPhai90 BapTayTrai90 XoayPhai XoayTrai J2_home
+HaiTaySongSong J7_home J10_home
+HaiTayDocSuon J6_home J9_home
+Mo2Tay BapTayPhai90 BapTayTrai90
+XoayTraiPhai XoayPhai XoayTrai J2_home
+GioTayPhai BapTayPhai120 CangTayPhai90
+GioTayTrai BapTayTrai120 CangTayTrai90
+LenTaPhai BapTayPhai90 CangTayPhai135 J8_home CangTayPhai135 J8_home J7_home 
+LenTaTrai BapTayTrai90 CangTayTrai135 J11_home CangTayTrai135 J11_home J10_home
+XoayTayPhai BapTayPhai30 VaiPhai360
+XoayTayTrai BapTayTrai30 VaiTrai360
+CangTayVaySongSong CangTayPhai135 CangTayTrai45 CangTayTrai135 CangTayPhai45 CangTayTrai90 CangTayPhai90
+CangTaySongSong J8_home J11_home
+CangTayVuongGocBapTay CangTayTrai90 CangTayPhai90
+CangTayVuongGocBapTayNguoc CangTayTrai-90 CangTayPhai-90
+TayPhai J6_home J7_home J8_home
+TayTrai J9_home J10_home J11_home
+Ve J6_home J8_home J10_home
+ChumTayTrenDau ChumTayPhai ChumTayTrai
+Dongtac1 P_Lock_0_4_6_8_9_11 BapTayPhai90 BapTayTrai90 P_Lock_4_6_7_8_9_10_11 Delay UDelay P_Lock_4_6_8_9_11 ChumTayPhai ChumTayTrai P_Lock_0_4_6_7_8_9_10_11 Delay UDelay P_Lock_ BapTayPhai90 BapTayTrai90 P_Lock_0_7_10 Delay UDelay P_Lock_4_6_8_9_11 J7_home J10_home
+Dongtac2.1 P_Lock_7_9_11 VaiPhai90 CangTayPhai-90 BapTayTrai90 XoayDauTrai P_Lock_0_4_6_7_8_9_10_11 Delay UDelay P_Lock_7_9_11 J6_home J8_home J10_home J4_home P_Lock_4 VaiTrai90 CangTayTrai-90 BapTayPhai90 P_Lock_0_4_7_9_11 Delay UDelay P_Lock_4 J7_home J9_home J11_home P_Lock_6_7_8_9_10_11 Delay UDelay P_Lock_7_9_11 VaiPhai90 CangTayPhai-90 BapTayTrai90 XoayDauTrai P_Lock_0_4_6_7_8_9_10_11 Delay UDelay P_Lock_7_9_11 J6_home J8_home J10_home J4_home
+Dongtac2.2 P_Lock_6_8_10 VaiTrai90 CangTayTrai-90 BapTayPhai90 XoayDauPhai P_Lock_0_4_6_7_8_9_10_11 Delay UDelay P_Lock_6_8_10 J7_home J9_home J11_home J4_home P_Lock_4 VaiPhai90 CangTayPhai-90 BapTayTrai90 P_Lock_0_4_6_8_10 Delay UDelay P_Lock_4 J6_home J8_home J10_home P_Lock_6_7_8_9_10_11 Delay UDelay P_Lock_6_8_10 VaiTrai90 CangTayTrai-90 BapTayPhai90 XoayDauPhai P_Lock_0_4_6_7_8_9_10_11 Delay UDelay P_Lock_6_8_10 J7_home J9_home J11_home J4_home
+Dongtac3 P_Lock_F_R_9_11 BapTayTrai165 P_Lock_F_L_6_8 BapTayPhai165 P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_R_0_1_3_4_6_7_8_9_11 XoayTrai XuongTayTrai P_Lock_L_0_1_3_4_6_8 XuongTayPhai QuaySau P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_F_R_9_11 BapTayTrai165 P_Lock_F_L_6_8 BapTayPhai165 P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_R_0_1_3_4_9_11 Quay270 XuongTayTrai P_Lock_L_0_1_3_4_6_8 XuongTayPhai Quay1Vong P_Lock_
+Dongtac4.1 P_Lock_0_1_3_4_7_8_10_11 XoayTrai30/2 VaiPhai180x3 VaiTrai180x3 P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_0_1_3_4_6_9 BapTayPhai90 BapTayTrai90 CangTayPhai-90 CangTayTrai-90 XoayPhai15 P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_0_1_3_4 XoayTrai30 J7_home J10_home J8_home J11_home P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_0_1_3_4_7_8_10_11 J2_home J6_homex2 J9_homex2 P_Lock_
+Dongtac4.2 P_Lock_F_6_8_9_11 BapTayPhai90 BapTayTrai90 P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_0_1_2_4 J7_home J10_home CuiNguoi60 VaiPhai90 VaiTrai75 CangTayTrai-135 CangTayPhai-135 P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_0_1_2_4 BapTayTrai165 BapTayPhai165 J6_home J9_home J8_home J11_home J3_home P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_ J7_home J10_home
