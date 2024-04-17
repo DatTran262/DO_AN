@@ -33,7 +33,7 @@ class DrawWidget(QtWidgets.QWidget):
         layout.setSpacing(0)
 
         self.timer = QtCore.QTimer()
-        self.timer.setInterval(2)
+        self.timer.setInterval(2) #time step
 
         layout.addWidget(self.canvas)
         layout.addWidget(self.toolbar)
@@ -100,14 +100,10 @@ class DrawWidget(QtWidgets.QWidget):
 
     def all_plot(self):
         file = "D:\\Workspace\\timeTable.txt"
-        # with open(file, "w") as f:
-        #     f.truncate(0)
 
         print("COUNTER NOW ", self.t_counter, " and total step ", len(self.jointTrajectory))
         if (self.t_counter >= len(self.jointTrajectory)):
             self.drawCurve()
-# em thay thanh limit_plot day nay 
-# self.robot_limit_plot()
             self.plot_pause()
             # output some signal to host to revert back button
             self.plot_done.emit()

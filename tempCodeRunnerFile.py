@@ -1,8 +1,3 @@
-            self.tempPopup.checkBoxHL.setChecked(False)
-            self.tempPopup.checkBoxHR.setChecked(False)
-            self.tempPopup.checkBoxH_6.setChecked(False)
-            self.tempPopup.checkBoxH_7.setChecked(False)
-            self.tempPopup.checkBoxH_8.setChecked(False)
-            self.tempPopup.checkBoxH_9.setChecked(False)
-            self.tempPopup.checkBoxH_10.setChecked(False)
-            self.tempPopup.checkBoxH_11.setChecked(False)
+
+        # if checked == False: 
+        #     self.tempPopup.checkBoxAll.setChecked(False)

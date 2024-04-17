@@ -1,9 +1,8 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog, QTableWidgetItem, QApplication, QMainWindow, QTableWidget, QListView, QCheckBox
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtCore import QTimer
-from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import QTimer, QPoint
+from PyQt5.QtGui import QColor
 import Action
 import random, string
 import numpy as np
@@ -152,7 +151,12 @@ class Ui(QtWidgets.QMainWindow):
             currentIndex = self.tempPopup.lwdZip.currentRow()
             item = self.tempPopup.lwdZip.item(currentIndex)
             currentName = item.text()
-            self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentName, type = 202))
+
+            listItem = QtWidgets.QListWidgetItem(currentName)
+            listItem.setForeground(QtGui.QBrush(QtGui.QColor(255, 0, 0)))
+            self.ListActionView.addItem(listItem)
+            
+            # self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentName), type = 202)
 
         else:          
             temp_part = []
@@ -191,7 +195,6 @@ class Ui(QtWidgets.QMainWindow):
 
         listActionName = listActionNameOrigin.copy()
 
-# Load file
         creatListAction()
 
         self.tempPopup.btnSAVE.clicked.connect(self.save_button_clicked)
@@ -203,61 +206,78 @@ class Ui(QtWidgets.QMainWindow):
         self.tempPopup.checkBoxALL.clicked.connect(self.checkBoxsAll)
         self.tempPopup.checkBoxHL.clicked.connect(self.checkBoxsHL)
         self.tempPopup.checkBoxHR.clicked.connect(self.checkBoxsHR)
+        self.tempPopup.checkBoxF.clicked.connect(self.checkBoxsF)
+
+        for checkBox in [self.tempPopup.checkBoxF_0, self.tempPopup.checkBoxF_1, self.tempPopup.checkBoxF_2, self.tempPopup.checkBoxF_3, self.tempPopup.checkBoxF_4]:
+            checkBox.clicked.connect(self.clearCheckBoxsF)
+
+        for checkBox in [self.tempPopup.checkBoxH_6, self.tempPopup.checkBoxH_7, self.tempPopup.checkBoxH_8]:
+            checkBox.clicked.connect(self.clearCheckBoxsHR)
+
+        for checkBox in [self.tempPopup.checkBoxH_9, self.tempPopup.checkBoxH_10, self.tempPopup.checkBoxH_11]:
+            checkBox.clicked.connect(self.clearCheckBoxsHL)
+        
         # self.tempPopup.exec()
 
     def clearCheckBoxs(self):
-        self.tempPopup.checkBoxALL.setChecked(False)
+        checkBoxes = [self.tempPopup.checkBoxALL, self.tempPopup.checkBoxF, self.tempPopup.checkBoxHL,
+                    self.tempPopup.checkBoxHR]
+        for i in range(0, 12):  # Duyệt từ checkBoxH_0 đến checkBoxH_11 (bỏ checkBoxH_5)
+            if i < 5:
+                checkBoxes.append(getattr(self.tempPopup, f"checkBoxF_{i}"))
+            elif i > 5:
+                checkBoxes.append(getattr(self.tempPopup, f"checkBoxH_{i}"))
+        
+        for checkBox in checkBoxes:
+            checkBox.setChecked(False)
+
+    def clearCheckBoxsF(self):
         self.tempPopup.checkBoxF.setChecked(False)
-        self.tempPopup.checkBoxHL.setChecked(False)
+        self.tempPopup.checkBoxALL.setChecked(False)
+
+    def clearCheckBoxsHR(self):
         self.tempPopup.checkBoxHR.setChecked(False)
-        self.tempPopup.checkBoxH_6.setChecked(False)
-        self.tempPopup.checkBoxH_7.setChecked(False)
-        self.tempPopup.checkBoxH_8.setChecked(False)
-        self.tempPopup.checkBoxH_9.setChecked(False)
-        self.tempPopup.checkBoxH_10.setChecked(False)
-        self.tempPopup.checkBoxH_11.setChecked(False)
+        self.tempPopup.checkBoxALL.setChecked(False)
+
+    def clearCheckBoxsHL(self):
+        self.tempPopup.checkBoxHL.setChecked(False)
+        self.tempPopup.checkBoxALL.setChecked(False)
 
     def checkBoxsAll(self):
-        if self.tempPopup.checkBoxALL.checkState() == QtCore.Qt.Checked:
-            self.tempPopup.checkBoxF.setChecked(True)
-            self.tempPopup.checkBoxHL.setChecked(True)
-            self.tempPopup.checkBoxHR.setChecked(True)
-            self.tempPopup.checkBoxH_6.setChecked(True)
-            self.tempPopup.checkBoxH_7.setChecked(True)
-            self.tempPopup.checkBoxH_8.setChecked(True)
-            self.tempPopup.checkBoxH_9.setChecked(True)
-            self.tempPopup.checkBoxH_10.setChecked(True)
-            self.tempPopup.checkBoxH_11.setChecked(True)
-        else:
-            self.tempPopup.checkBoxF.setChecked(False)
-            self.tempPopup.checkBoxHL.setChecked(False)
-            self.tempPopup.checkBoxHR.setChecked(False)
-            self.tempPopup.checkBoxH_6.setChecked(False)
-            self.tempPopup.checkBoxH_7.setChecked(False)
-            self.tempPopup.checkBoxH_8.setChecked(False)
-            self.tempPopup.checkBoxH_9.setChecked(False)
-            self.tempPopup.checkBoxH_10.setChecked(False)
-            self.tempPopup.checkBoxH_11.setChecked(False)
+        checkBoxes = [self.tempPopup.checkBoxALL, self.tempPopup.checkBoxF, self.tempPopup.checkBoxHL,
+                    self.tempPopup.checkBoxHR]
+        for i in range(0, 12):  # Duyệt từ checkBoxH_0 đến checkBoxH_11 (bỏ checkBoxH_5)
+            if i < 5:
+                checkBoxes.append(getattr(self.tempPopup, f"checkBoxF_{i}"))
+            elif i > 5:
+                checkBoxes.append(getattr(self.tempPopup, f"checkBoxH_{i}"))
+        
+        for checkBox in checkBoxes:
+            checkBox.setChecked(True)
 
     def checkBoxsHL(self):
-        if self.tempPopup.checkBoxHL.checkState() == QtCore.Qt.Checked:
-            self.tempPopup.checkBoxH_9.setChecked(True)
-            self.tempPopup.checkBoxH_10.setChecked(True)
-            self.tempPopup.checkBoxH_11.setChecked(True)
-        else:
-            self.tempPopup.checkBoxH_9.setChecked(False)
-            self.tempPopup.checkBoxH_10.setChecked(False)
-            self.tempPopup.checkBoxH_11.setChecked(False)
+        checked = self.tempPopup.checkBoxHL.checkState() == QtCore.Qt.Checked
+        for i in range(9, 12):  # Cập nhật từ checkBoxH_9 đến checkBoxH_11
+            getattr(self.tempPopup, f"checkBoxH_{i}").setChecked(checked)
+        
+        if checked == False: 
+            self.tempPopup.checkBoxALL.setChecked(False)
 
     def checkBoxsHR(self):
-        if self.tempPopup.checkBoxHR.checkState() == QtCore.Qt.Checked:
-            self.tempPopup.checkBoxH_6.setChecked(True)
-            self.tempPopup.checkBoxH_7.setChecked(True)
-            self.tempPopup.checkBoxH_8.setChecked(True)
-        else:
-            self.tempPopup.checkBoxH_6.setChecked(False)
-            self.tempPopup.checkBoxH_7.setChecked(False)
-            self.tempPopup.checkBoxH_8.setChecked(False)
+        checked = self.tempPopup.checkBoxHR.checkState() == QtCore.Qt.Checked
+        for i in range(6, 9):  # Cập nhật từ checkBoxH_6 đến checkBoxH_8
+            getattr(self.tempPopup, f"checkBoxH_{i}").setChecked(checked)
+
+        if checked == False: 
+            self.tempPopup.checkBoxALL.setChecked(False)
+
+    def checkBoxsF(self):
+        checked = self.tempPopup.checkBoxF.checkState() == QtCore.Qt.Checked
+        for i in range(0, 5):  # Cập nhật từ checkBoxF_0 đến checkBoxF_4
+            getattr(self.tempPopup, f"checkBoxF_{i}").setChecked(checked)
+
+        if checked == False: 
+            self.tempPopup.checkBoxALL.setChecked(False)
 
     def change_robot(self):
         #reset all first
@@ -491,9 +511,6 @@ class Ui(QtWidgets.QMainWindow):
 
                 with open("Zip.txt", "a") as f:
                     f.write(line_to_write + "\n")
-
-                self.ListActionView.addItem(QtWidgets.QListWidgetItem(currentZipName, type = 202))
-
                 self.tempPopup.reject()
             except Exception as eMessage:
                 error_message = str(eMessage)

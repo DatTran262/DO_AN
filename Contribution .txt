@@ -1,0 +1,22 @@
+*Note
+-Lấy được Z từ video 2D hoặc không thì cũng là để tạo ra 1 chuỗi gồm các giá trị của các khớp (điều này không đúng với mục tiêu đề ra ban đầu là từ cái chuỗi dài dài đó cắt nhỏ ra custome thành từng phần)
+-Phương án mới sẽ là quay nhiều trainning data có thể từ 2D video chuyển thành các giá trị có cả Z.
+
+*Đóng góp
+- Tạo giao diện UI với chức năng cho phép tạo các hành động cơ bản chủ yếu cho các cánh tay của mô hình robot hình người.
+- Tạo 1 thư viện hành động có sẵn các hoạt động cơ bản cho robot.
+
+*Hệ thống, thuộc tính
+- Robot gồm 11 khớp tạo bởi 3 tay máy robot
+- Người dùng có thể thực hiện thêm hoặc thay đổi các thông số trong bảng DH để thực hiện điều khiển robot theo điều khiển các biến khớp (Joint Action).
+- Sử dụng kỹ thuật ức chế hành động điều này giúp cho trong chuỗi hành động gồm nhiều khớp hoạt động của robot xác định được những khớp khi nào được hoạt động nối tiếp hay song song (Part Lock Action).
+- Tạo mảng cờ để kiểm soát sự hoạt động của các khớp. Ví dụ việc thực hiện khóa, thực hiện hành động song song và hành động nối tiếp.
+- Mô hình robot trong webots lấy ý tưởng từ con robot NAO.
+- Stream trực tiếp sang phần mềm webots giá trị của từng khớp theo thời gian(truyền thông UDP).
+
+*How to connect UI -> matlab draw
+- Khởi tạo khung hình vẽ
+- Time step là 2 milisecond/ 1 frame 
+- Execute khi không có hành động sẽ là toàn bộ vùng hoạt động của các khớp với tốc độ được đặt mặc định. Execute khi có hành động sẽ vẽ lại 
+- DrawCurve vẽ lại đường đi robot đã di chuyển.
+- Plot vẽ với từng giá trị waypoint X, Y, Z tương ứng của 3 tay máy(tương ứng 3 phần thân, tay trái, tay phải của robot). 

@@ -1,0 +1,4 @@
+9)}', (10, 30), cv2.FONT_HERSHEY_PLAIN, 1,
+            #             (255, 0, 0), 2)
+            # cv2.putText(img, f'Radian 10: {float(radian_10)}', (10, 60), cv2.FONT_HERSHEY_PLAIN, 1,
+            #             (255, 0, 0), 2)
