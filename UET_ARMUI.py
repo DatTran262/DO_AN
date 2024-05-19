@@ -301,7 +301,7 @@ class Ui(QtWidgets.QMainWindow):
         self.endpoint.insertRow(self.endpoint.rowCount())
         self.endpoint.setItem(self.endpoint.rowCount()-1, 0, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointX[1] )))
         self.endpoint.setItem(self.endpoint.rowCount()-1, 1, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.waypointY[1] )))
-        self.endpoint.setItem(self.endpoint.rowCount()-1, 2, QtWidgets.QTableWidgetItem( "{:.5f}".format(self.canvas.robot.jointSpeeds[1] )))
+        self.endpoint.setItem(self.endpoint.rowCount()-1, 2, QtWidgets.QTableWidgetItem( "{:.5f}".format(0 ))) #self.canvas.robot.jointSpeeds[1]
 
         self.endpoint.scrollToBottom()
 

@@ -15,7 +15,7 @@ class DrawWidget(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
-        self.fig = Figure(dpi = 100)
+        self.fig = Figure(dpi = 150)
         self.canvas = FigureCanvas(self.fig)
         self.toolbar = NavigationToolbar(self.canvas, self)
 
@@ -70,10 +70,8 @@ class DrawWidget(QtWidgets.QWidget):
 
     def setJointTrajectory(self, jointTrajectory):
         if (jointTrajectory is None): 
-            print('none')
             self.jointTrajectory = self.robot.jointSpace
         else: 
-            print('no none')
             self.jointTrajectory = jointTrajectory
 
     def robot_limit_plot(self):
@@ -110,7 +108,7 @@ class DrawWidget(QtWidgets.QWidget):
             return
 
         self.robot.apply_value(self.jointTrajectory[self.t_counter])
-        # print("self.jointTrajectory[self.t_counter]:", self.jointTrajectory[self.t_counter])
+        print("self.jointTrajectory[self.t_counter]:", self.jointTrajectory[self.t_counter])
         with open(file, "w") as f:
             for row in self.jointTrajectory[self.t_counter]:
                 f.write(f"{row} ")

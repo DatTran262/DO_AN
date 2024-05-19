@@ -86,7 +86,7 @@ class TimeTable:
        
         self.timeTable[id] = np.append(self.timeTable[id], np.delete(temp, 0))
 
-    def process(self, Zip):
+    def addZip(self, Zip):
         results = []
         for action in Zip.container:
             if isinstance(action, Pose):
@@ -112,7 +112,7 @@ class TimeTable:
             elif (type(i) is Lock):
                 self.addLock(i)
             elif (type(i) is Zip):
-                self.process(i)
+                self.addZip(i)
             else: raise Exception("Time Table prepare error")
 
 class Lock:
@@ -338,7 +338,7 @@ class RobotUR5(_Robot):
 
 
     def get_waypoint(self):
-        print("?????? ", self.check_limit())
+        # print("?????? ", self.check_limit())
         if not (self.check_limit()): return False
         self.forward_kinematic()
         return True
