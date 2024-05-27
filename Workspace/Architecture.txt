@@ -1,0 +1,4 @@
+*Base: Action + time -> Pose -> Actiuator + time
+request: Triển khai no brain
+	 Tìm pose + time
+	 Tìm quy luật vận tốc

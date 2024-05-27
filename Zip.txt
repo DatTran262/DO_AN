@@ -30,3 +30,4 @@ Dongtac5 P_Lock_0_1_3_4_6_9 XoayTrai BapTayPhai60 BapTayTrai60 CangTayPhai-135x3
 Dongtac6 P_Lock_F_6_9 BapTayPhai165 BapTayTrai165 J8_homex2 J11_homex2 P_Lock_L_R_1_2_3_4 Delay UDelay P_Lock_F_6_8_9_11 J7_home J10_home P_Lock_
 D8 XoayTrai VaiPhai90 VaiTrai90
 test D T
+tessst HR7_lenta_1 HR8_lenta_2

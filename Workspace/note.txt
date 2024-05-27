@@ -1,0 +1,61 @@
+- Góc quay các khớp theo chiều kim đồng hồ tính theo radian.
+Các khớp:
+- Góc quay của khớp LShoulderPitch (vai trái nghiêng) - đơn vị radian.
+- Góc quay của khớp LShoulderRoll (vai trái lăn) - limit (-0.314159)->1.5
+- Góc quay của khớp LElbowYaw (cổ tay trái) - đơn vị radian.
+- Góc quay của khớp LElbowRoll (cổ tay trái lăn) - đơn vị radian.
+- Góc quay của khớp LHipYawPitch (hông trái nghiêng ngang) - đơn vị radian.
+- Góc quay của khớp LHipRoll (hông trái lăn) - đơn vị radian.
+- Góc quay của khớp LHipPitch (hông trái nghiêng) - đơn vị radian.
+- Góc quay của khớp LKneePitch (đầu gối trái nghiêng) - đơn vị radian.
+- Góc quay của khớp LAnklePitch (mắt cá trái nghiêng) - đơn vị radian.
+- Góc quay của khớp LAnkleRoll (mắt cá trái lăn) - đơn vị radian.
+- Góc quay của khớp RHipYawPitch (hông phải nghiêng ngang) - đơn vị radian.
+- Góc quay của khớp RHipRoll (hông phải lăn) - đơn vị radian.
+- Góc quay của khớp RHipPitch (hông phải nghiêng) - đơn vị radian.
+- Góc quay của khớp   (đầu gối phải nghiêng) - đơn vị radian.
+- Góc quay của khớp RAnklePitch (mắt cá phải nghiêng) - đơn vị radian.
+- Góc quay của khớp RAnkleRoll (mắt cá phải lăn) - đơn vị radian.
+- Góc quay của khớp RShoulderPitch (vai phải nghiêng) - đơn vị radian.
+- Góc quay của khớp RShoulderRoll (vai phải lăn) - limit 0.314159->(-1.5)
+- Góc quay của khớp RElbowYaw (cổ tay phải) - đơn vị radian.
+- Góc quay của khớp RElbowRoll (cổ tay phải lăn) - đơn vị radian.
+- Góc quay của khớp LWristYaw (cổ tay trái lên xuống).
+
+
+
+
+  // walk forwards
+  // int i;
+  // for(i = 0; i < 10; i++){
+    // wbu_motion_set_loop(test, true);
+    // wbu_motion_play(test);
+    // wbu_motion_set_loop(test, false);
+    
+    // int pause;
+    // for(pause = 2000; pause > 0; pause -= time_step) wb_robot_step(time_step);
+  
+  // }
+  
+  
+  
+    // until a key is pressed
+  // int key = -1;
+  // do {
+    // simulation_step();
+    // key = wb_keyboard_get_key();
+    // break;
+  // } while (key <= 0);
+
+  // stop looping this motion
+  // wbu_motion_set_loop(test, false);
+
+  // read keyboard and execute user commands
+  // while (1) {
+    // if (key > 0)
+      // run_command(key);
+
+    // simulation_step();
+    // key = wb_keyboard_get_key();
+    // break;
+  // }

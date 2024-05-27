@@ -33,7 +33,7 @@ class DrawWidget(QtWidgets.QWidget):
         layout.setSpacing(0)
 
         self.timer = QtCore.QTimer()
-        self.timer.setInterval(2) #time step
+        self.timer.setInterval(0.2) #time step
 
         layout.addWidget(self.canvas)
         layout.addWidget(self.toolbar)
