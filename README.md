@@ -19,4 +19,4 @@
 - Chạy file chính "UET_ARMUI", nơi chứa giao diện đầy đủ các tính năng đã tạo ra.
 - Mở nền tảng Webots, rồi chạy file 
 ## Video Demo
-https://github.com/PhamDangNguyen/Nhap_mon_tuong_tac_nguoi_may/assets/86046279/75680ccc-30ba-400f-883a-8b8eb514b23c
+[Xem bản demo của chúng tôi trên YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
